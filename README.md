@@ -5,7 +5,6 @@ Profesionální webové stránky pro tesařské práce inspirované designem str
 ## Struktura projektu
 
 ```
-tesarske-stranky/
 ├── index.html              # Hlavní HTML stránka
 ├── css/
 │   ├── style.css          # Hlavní CSS styly
