@@ -1,0 +1,419 @@
+/* Reset a základní styly */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Hlavička */
+#header {
+    background: linear-gradient(135deg, #8B4513, #A0522D);
+    color: white;
+    padding: 20px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo h1 {
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.logo h1 a {
+    color: white;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.logo p {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+.contact-info {
+    text-align: right;
+}
+
+.contact-info div {
+    margin: 5px 0;
+    font-size: 1.1rem;
+}
+
+/* Navigace */
+#navigation {
+    background: #654321;
+    border-bottom: 3px solid #8B4513;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.nav-menu li {
+    margin: 0;
+}
+
+.nav-menu a {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    background: #8B4513;
+    color: #FFD700;
+    transform: translateY(-2px);
+}
+
+/* Slider sekce */
+#slider-section {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#slider {
+    width: 100%;
+    height: 100%;
+}
+
+.nivoSlider {
+    position: relative;
+    width: 100%;
+    height: 100% !important;
+    overflow: hidden;
+}
+
+.nivoSlider img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hlavní obsah */
+#main-content {
+    background: white;
+    margin-bottom: 50px;
+}
+
+.content-section {
+    padding: 50px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.content-section:last-child {
+    border-bottom: none;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: #8B4513;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+/* Služby */
+#services h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #8B4513;
+    margin-bottom: 40px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.service-item {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.service-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+    border-color: #8B4513;
+}
+
+.service-image {
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 8px;
+    position: relative;
+}
+
+.service-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.service-image:hover img {
+    transform: scale(1.1);
+}
+
+.service-item h3 {
+    font-size: 1.8rem;
+    color: #8B4513;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.service-item p {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.btn-more {
+    display: inline-block;
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #8B4513, #A0522D);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.btn-more:hover {
+    background: linear-gradient(135deg, #A0522D, #CD853F);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
+}
+
+/* O nás sekce */
+#about h2 {
+    font-size: 2.5rem;
+    color: #8B4513;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.benefits {
+    list-style: none;
+    margin-top: 30px;
+}
+
+.benefits li {
+    padding: 10px 0;
+    font-size: 1.1rem;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.benefits li:last-child {
+    border-bottom: none;
+}
+
+/* Patička */
+#footer {
+    background: linear-gradient(135deg, #654321, #8B4513);
+    color: white;
+    padding: 50px 0 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #FFD700;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #FFD700;
+}
+
+.newsletter-form {
+    display: flex;
+    margin-top: 15px;
+}
+
+.newsletter-form input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    font-size: 1rem;
+}
+
+.newsletter-form button {
+    padding: 10px 20px;
+    background: #FFD700;
+    color: #8B4513;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.newsletter-form button:hover {
+    background: #FFA500;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 20px;
+    text-align: center;
+    color: rgba(255,255,255,0.8);
+}
+
+/* Responzivní design */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .logo h1 {
+        font-size: 2rem;
+    }
+    
+    .nav-menu {
+        flex-direction: column;
+    }
+    
+    .nav-menu a {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+    
+    #slider-section {
+        height: 300px;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    
+    .content-section {
+        padding: 30px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+    
+    #slider-section {
+        height: 250px;
+    }
+    
+    .service-item {
+        padding: 20px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
