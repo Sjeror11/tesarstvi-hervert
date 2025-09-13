@@ -63,9 +63,49 @@ body {
 #navigation {
     background: #654321;
     border-bottom: 3px solid #8B4513;
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 100;
+}
+
+.nav-header {
+    display: none;
+    justify-content: flex-end;
+    padding: 15px 0;
+}
+
+/* Mobile menu toggle button */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 5px;
+    width: 30px;
+    height: 25px;
+    justify-content: space-between;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
 }
 
 .nav-menu {
@@ -73,6 +113,15 @@ body {
     list-style: none;
     justify-content: space-around;
     flex-wrap: wrap;
+}
+
+/* Desktop - zajistit že menu je vždy viditelné */
+@media (min-width: 769px) {
+    .nav-menu {
+        display: flex !important;
+        opacity: 1 !important;
+        max-height: none !important;
+    }
 }
 
 .nav-menu li {
@@ -368,13 +417,43 @@ body {
         font-size: 2rem;
     }
     
+    /* Zobrazit hamburger tlačítko */
+    .nav-header {
+        display: flex !important;
+    }
+    
+    .mobile-menu-toggle {
+        display: flex !important;
+    }
+    
+    /* Skrýt menu ve výchozím stavu */
     .nav-menu {
+        display: none;
         flex-direction: column;
+        width: 100%;
+        background: #654321;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, opacity 0.3s ease;
+        opacity: 0;
+    }
+    
+    /* Zobrazit menu když je otevřené */
+    .nav-menu.mobile-open {
+        display: flex !important;
+        max-height: 500px;
+        opacity: 1;
     }
     
     .nav-menu a {
-        padding: 12px 15px;
-        font-size: 0.9rem;
+        padding: 15px 20px;
+        font-size: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
+    }
+    
+    .nav-menu li:last-child a {
+        border-bottom: none;
     }
     
     #slider-section {

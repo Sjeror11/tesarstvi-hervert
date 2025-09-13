@@ -25,4 +25,4 @@ Thumbs.db
 node_modules/
 
 # Cache
-.cache/
+.cache/http_server.pid
