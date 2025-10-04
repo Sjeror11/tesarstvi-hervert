@@ -29,6 +29,37 @@
             overflow-y: auto;
             cursor: pointer;
             padding: 20px;
+            
+            /* Animace otevření */
+            opacity: 0;
+            animation: galleryFadeIn 0.3s ease-out forwards;
+        }
+        
+        @keyframes galleryFadeIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Animace zavření */
+        .photo-gallery.closing {
+            animation: galleryFadeOut 0.2s ease-in forwards;
+        }
+        
+        @keyframes galleryFadeOut {
+            from { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            to { 
+                opacity: 0;
+                transform: scale(0.95);
+            }
         }
         .gallery-header {
             position: sticky;
@@ -424,8 +455,11 @@
                 }
             });
 
-            // Funkce pro otevření galerie
+            // Funkce pro otevření galerie s History API
             function openGallery(gallery) {
+                // Přidat stav do historie pro mobilní "Zpět"
+                history.pushState({ gallery: true }, '', '#galerie-' + gallery.title.toLowerCase().replace(/\s+/g, '-'));
+                
                 var galleryHtml = '<div class="photo-gallery">' +
                     '<div class="gallery-header">' +
                         '<h3>' + gallery.title + '</h3>' +
@@ -448,10 +482,42 @@
                 // Zavření galerie
                 $('.gallery-close, .photo-gallery').on('click', function(e) {
                     if (e.target === this) {
-                        $('.photo-gallery').remove();
+                        closeGallery();
                     }
                 });
             }
+
+            // Funkce pro zavření galerie s animací
+            function closeGallery() {
+                var $gallery = $('.photo-gallery');
+                if ($gallery.length > 0) {
+                    // Přidat closing class pro animaci
+                    $gallery.addClass('closing');
+                    
+                    // Počkat na dokončení animace, pak odstranit
+                    setTimeout(function() {
+                        $gallery.remove();
+                    }, 200);
+                    
+                    // Vrátit se zpět v historii bez přesměrování
+                    if (window.location.hash.startsWith('#galerie-')) {
+                        history.back();
+                    }
+                }
+            }
+
+            // Zpracování mobilního tlačítka "Zpět"
+            $(window).on('popstate', function(e) {
+                // Když uživatel zmáčkne "Zpět" a je otevřená galerie
+                var $gallery = $('.photo-gallery');
+                if ($gallery.length > 0) {
+                    // Zavřít galerii s animací bez úpravy historie
+                    $gallery.addClass('closing');
+                    setTimeout(function() {
+                        $gallery.remove();
+                    }, 200);
+                }
+            });
         });
     </script>
 </body>
