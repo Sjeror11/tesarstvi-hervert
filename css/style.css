@@ -6,10 +6,79 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Georgia', 'Times New Roman', serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f5f5f5;
+    color: #2F1B14;
+    
+    /* ZMAČKANÝ WANTED PAPÍR POZADÍ */
+    background: 
+        /* Špinavé skvrny a patina */
+        radial-gradient(ellipse at 20% 30%, rgba(139,69,19,0.15) 5%, transparent 20%),
+        radial-gradient(ellipse at 70% 80%, rgba(101,67,33,0.12) 8%, transparent 25%),
+        radial-gradient(ellipse at 90% 20%, rgba(160,82,45,0.1) 3%, transparent 15%),
+        radial-gradient(ellipse at 30% 90%, rgba(139,69,19,0.08) 6%, transparent 18%),
+        
+        /* Zmačkané linie a záhyby */
+        linear-gradient(45deg, transparent 48%, rgba(139,69,19,0.08) 49%, rgba(139,69,19,0.08) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(101,67,33,0.06) 49%, rgba(101,67,33,0.06) 51%, transparent 52%),
+        linear-gradient(135deg, transparent 47%, rgba(139,69,19,0.04) 48%, rgba(139,69,19,0.04) 52%, transparent 53%),
+        
+        /* Papírová textura s noise */
+        repeating-linear-gradient(
+            0deg,
+            rgba(139,69,19,0.02) 0px,
+            transparent 1px,
+            transparent 3px,
+            rgba(160,82,45,0.03) 4px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(101,67,33,0.02) 0px,
+            transparent 2px,
+            transparent 4px,
+            rgba(139,69,19,0.025) 5px
+        ),
+        
+        /* Základní starý papír */
+        linear-gradient(135deg, 
+            #F4E4BC 0%,   /* Světlá krémová */
+            #E6D3A7 15%,  /* Zažloutlá */
+            #D4C19C 30%,  /* Zašpiněná */
+            #E8D5AA 50%,  /* Střední tón */
+            #DCC7A0 70%,  /* Tmavší */
+            #F0E1B9 100%  /* Zpět světlejší */
+        );
+    
+    background-size: 
+        400px 300px, 350px 250px, 200px 180px, 280px 220px,  /* Skvrny */
+        80px 80px, 60px 60px, 90px 90px,                     /* Záhyby */
+        15px 15px, 12px 12px,                                /* Textura */
+        100% 100%;                                           /* Základní */
+    
+    background-attachment: fixed;
+    min-height: 100vh;
+    
+    /* Přidání jemného grain efektu */
+    position: relative;
+}
+
+/* Vintage papírový grain overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        /* Film grain noise */
+        radial-gradient(circle at 25% 25%, rgba(139,69,19,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(101,67,33,0.08) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(160,82,45,0.06) 0.5px, transparent 0.5px);
+    background-size: 8px 8px, 12px 12px, 6px 6px;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.7;
 }
 
 .container {
@@ -18,12 +87,106 @@ body {
     padding: 0 20px;
 }
 
-/* Hlavička */
+/* Hlavička - STARÉ DŘEVO */
 #header {
-    background: linear-gradient(135deg, #8B4513, #A0522D);
+    background: 
+        /* Dřevěné suky a nedokonalosti */
+        radial-gradient(ellipse 80px 20px at 15% 40%, rgba(45,25,15,0.8) 30%, transparent 70%),
+        radial-gradient(ellipse 60px 15px at 85% 70%, rgba(35,20,10,0.7) 40%, transparent 70%),
+        radial-gradient(ellipse 90px 25px at 70% 20%, rgba(55,35,20,0.6) 35%, transparent 65%),
+        radial-gradient(ellipse 70px 18px at 25% 80%, rgba(40,25,15,0.75) 30%, transparent 70%),
+        
+        /* Dřevěné žíly a letokruhy */
+        repeating-linear-gradient(
+            92deg,
+            rgba(45,25,15,0.4) 0px,
+            rgba(65,40,25,0.3) 3px,
+            rgba(85,50,30,0.2) 6px,
+            rgba(105,60,35,0.3) 9px,
+            rgba(75,45,25,0.4) 12px
+        ),
+        
+        /* Vertikální dřevěné linie */
+        repeating-linear-gradient(
+            88deg,
+            transparent 0px,
+            transparent 8px,
+            rgba(25,15,10,0.3) 9px,
+            rgba(25,15,10,0.3) 11px,
+            transparent 12px,
+            transparent 25px
+        ),
+        
+        /* Základní staré dřevo */
+        linear-gradient(180deg, 
+            #654321 0%,    /* Tmavá kůra */
+            #8B4513 15%,   /* Hnědá */
+            #A0522D 30%,   /* Světlejší */
+            #8B4513 50%,   /* Střední */
+            #654321 70%,   /* Tmavší */
+            #5D4037 100%   /* Velmi tmavá */
+        );
+    
     color: white;
-    padding: 20px 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 30px 0;
+    box-shadow: 
+        0 12px 30px rgba(0,0,0,0.5),
+        inset 0 -5px 10px rgba(0,0,0,0.3),
+        inset 0 5px 10px rgba(255,255,255,0.1);
+    position: relative;
+    border-bottom: 5px solid #3E2723;
+}
+
+/* Dřevěná textura overlay pro header */
+#header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        /* Dřevěné praskliny */
+        linear-gradient(
+            85deg,
+            transparent 0px,
+            transparent 48%,
+            rgba(25,15,10,0.6) 49%,
+            rgba(25,15,10,0.6) 51%,
+            transparent 52%,
+            transparent 100%
+        ),
+        /* Jemné dřevěné žíly */
+        repeating-linear-gradient(
+            178deg,
+            transparent 0px,
+            transparent 2px,
+            rgba(0,0,0,0.15) 3px,
+            rgba(0,0,0,0.15) 4px,
+            transparent 5px,
+            transparent 8px
+        );
+    pointer-events: none;
+}
+
+/* Přidání dřevěných hřebíků do headeru */
+#header::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    bottom: -4px;
+    left: 0;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 80px,
+            #2D1810 82px,
+            #2D1810 88px,
+            transparent 90px,
+            transparent 150px
+        );
 }
 
 .header-content {
@@ -34,20 +197,51 @@ body {
 }
 
 .logo h1 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     margin-bottom: 5px;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    position: relative;
 }
 
 .logo h1 a {
-    color: white;
+    color: #F5DEB3; /* Krémová barva pro kontrast */
     text-decoration: none;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 
+        3px 3px 6px rgba(0,0,0,0.5),
+        1px 1px 2px rgba(139,69,19,0.8);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Western dekorace pro logo */
+.logo h1::before {
+    content: '🔨';
+    position: absolute;
+    left: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+}
+
+.logo h1::after {
+    content: '🪚';
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
 }
 
 .logo p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     opacity: 0.9;
     font-style: italic;
+    color: #F5DEB3;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 1px;
+}
 }
 
 .contact-info {
@@ -59,91 +253,30 @@ body {
     font-size: 1.1rem;
 }
 
-/* Navigace */
-#navigation {
-    background: #654321;
-    border-bottom: 3px solid #8B4513;
-    position: relative;
-    z-index: 100;
-}
-
-.nav-header {
-    display: none;
-    justify-content: flex-end;
-    padding: 15px 0;
-}
-
-/* Mobile menu toggle button */
-.mobile-menu-toggle {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 5px;
-    width: 30px;
-    height: 25px;
-    justify-content: space-between;
-}
-
-.mobile-menu-toggle span {
-    display: block;
-    height: 3px;
-    width: 100%;
-    background: white;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-    transform-origin: center;
-}
-
-.mobile-menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-}
-
-.mobile-menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.mobile-menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-}
-
-.nav-menu {
+.contact-info {
     display: flex;
-    list-style: none;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 8px;
 }
 
-/* Desktop - zajistit že menu je vždy viditelné */
-@media (min-width: 769px) {
-    .nav-menu {
-        display: flex !important;
-        opacity: 1 !important;
-        max-height: none !important;
-    }
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.nav-menu li {
-    margin: 0;
-}
-
-.nav-menu a {
-    display: block;
-    padding: 15px 20px;
+.contact-item a {
     color: white;
     text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
-.nav-menu a:hover,
-.nav-menu a.active {
-    background: #8B4513;
+.contact-item a:hover {
     color: #FFD700;
-    transform: translateY(-2px);
+}
+
+.contact-icon {
+    font-size: 1.2rem;
 }
 
 /* Slider sekce */
@@ -183,68 +316,213 @@ body {
 
 /* Hlavní obsah */
 #main-content {
-    background: white;
+    background: 
+        /* Dřevěná prkna pattern */
+        repeating-linear-gradient(
+            0deg,
+            rgba(139,69,19,0.1) 0px,
+            rgba(139,69,19,0.1) 1px,
+            transparent 1px,
+            transparent 15px
+        ),
+        /* Základní dřevěné pozadí */
+        linear-gradient(to bottom, rgba(245,222,179,0.9), rgba(222,184,135,0.9));
     margin-bottom: 50px;
+    box-shadow: 
+        inset 0 5px 15px rgba(139,69,19,0.2),
+        0 5px 20px rgba(0,0,0,0.1);
 }
 
 .content-section {
-    padding: 50px 0;
-    border-bottom: 1px solid #eee;
+    padding: 60px 0;
+    border-bottom: 3px solid rgba(139,69,19,0.3);
+    position: relative;
 }
 
 .content-section:last-child {
     border-bottom: none;
 }
 
+/* Dřevěný pattern pro sekce */
+.content-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            #8B4513 0px,
+            #8B4513 20px,
+            #A0522D 20px,
+            #A0522D 40px
+        );
+}
+
 .section-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .section-header h2 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     color: #8B4513;
     margin-bottom: 20px;
     font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 
+        3px 3px 6px rgba(0,0,0,0.4),
+        1px 1px 2px rgba(255,255,255,0.3);
+    font-family: 'Georgia', 'Times New Roman', serif;
 }
 
 .section-header p {
-    font-size: 1.2rem;
-    color: #666;
+    font-size: 1.3rem;
+    color: #654321;
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.8;
+    font-style: italic;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
 }
 
-/* Služby */
+/* Služby nadpis */
 #services h2 {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 3rem;
     color: #8B4513;
     margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 
+        3px 3px 6px rgba(0,0,0,0.4),
+        1px 1px 2px rgba(255,255,255,0.3);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    position: relative;
+}
+
+/* Wild West dekorace pro nadpis služeb */
+#services h2::before {
+    content: '🤠';
+    position: absolute;
+    left: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5rem;
+}
+
+#services h2::after {
+    content: '🌲';
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5rem;
 }
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    margin-top: 50px;
+    padding: 20px;
 }
 
 .service-item {
-    background: white;
-    border-radius: 10px;
+    /* ZMAČKANÝ WANTED POSTER */
+    background: 
+        /* Špinavé fleky od prstů a času */
+        radial-gradient(ellipse at 85% 15%, rgba(139,69,19,0.25) 8%, transparent 25%),
+        radial-gradient(ellipse at 20% 80%, rgba(101,67,33,0.2) 12%, transparent 30%),
+        radial-gradient(ellipse at 70% 70%, rgba(160,82,45,0.15) 6%, transparent 20%),
+        
+        /* Zmačkané záhyby a linie */
+        linear-gradient(42deg, transparent 47%, rgba(139,69,19,0.15) 48%, rgba(139,69,19,0.15) 50%, transparent 51%),
+        linear-gradient(-38deg, transparent 48%, rgba(101,67,33,0.12) 49%, rgba(101,67,33,0.12) 51%, transparent 52%),
+        
+        /* Základní starý papír s patinou */
+        radial-gradient(ellipse at center, 
+            #F8E6C8 0%, #F0DDB8 20%, #E8D4A8 40%, 
+            #E0CB98 60%, #D8C088 80%, #D0B878 100%
+        );
+    
+    /* Hrubý dřevěný rám */
+    border: 12px solid #654321;
+    border-radius: 8px;
     padding: 30px;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 2px solid transparent;
+    
+    /* Dramatické stíny */
+    box-shadow: 
+        0 15px 40px rgba(0,0,0,0.4),
+        inset 3px 3px 8px rgba(139,69,19,0.2),
+        inset -3px -3px 8px rgba(255,255,255,0.3);
+    
+    transition: all 0.4s ease;
+    position: relative;
+    cursor: pointer;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    
+    /* Mírné zakřivení jako zmačkaný papír */
+    transform: rotate(0.5deg);
 }
 
+/* Větší kovové hřebíky */
+.service-item::before,
+.service-item::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle, #2D1810 0%, #404040 30%, #606060 60%, #404040 90%, #2D1810 100%);
+    border-radius: 50%;
+    box-shadow: inset 2px 2px 4px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.4);
+    z-index: 10;
+}
+
+.service-item::before {
+    top: -8px;
+    left: -8px;
+}
+
+.service-item::after {
+    top: -8px;
+    right: -8px;
+}
+
+/* Dolní hřebíky */
+.service-item .service-image::before,
+.service-item .service-image::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle, #2D1810 0%, #404040 30%, #606060 60%, #404040 90%, #2D1810 100%);
+    border-radius: 50%;
+    box-shadow: inset 2px 2px 4px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.4);
+    z-index: 10;
+}
+
+.service-item .service-image::before {
+    bottom: -38px;
+    left: -38px;
+}
+
+.service-item .service-image::after {
+    bottom: -38px;
+    right: -38px;
+}
+
+/* Hover - jako vítr hýbající posterem */
 .service-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 25px rgba(0,0,0,0.15);
-    border-color: #8B4513;
+    transform: translateY(-12px) rotate(-1.5deg) scale(1.02);
+    box-shadow: 
+        0 25px 60px rgba(0,0,0,0.5),
+        inset 3px 3px 8px rgba(139,69,19,0.25),
+        inset -3px -3px 8px rgba(255,255,255,0.4);
 }
 
 .service-image {
@@ -252,30 +530,59 @@ body {
     overflow: hidden;
     border-radius: 8px;
     position: relative;
+    border: 3px solid #8B4513;
+    box-shadow: 
+        inset 0 2px 4px rgba(0,0,0,0.3),
+        0 2px 8px rgba(0,0,0,0.2);
 }
 
 .service-image img {
     width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
     transition: transform 0.3s ease;
+    filter: sepia(10%) contrast(110%); /* Vintage efekt */
 }
 
 .service-image:hover img {
-    transform: scale(1.1);
+    transform: scale(1.08);
+    filter: sepia(15%) contrast(120%);
 }
 
 .service-item h3 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     color: #8B4513;
     margin-bottom: 15px;
     font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    
+    /* WANTED poster styl */
+    font-family: 'Georgia', 'Times New Roman', serif;
+    position: relative;
+}
+
+/* Přidání "WANTED" stylu k nadpisům */
+.service-item h3::before {
+    content: '★ ';
+    font-size: 0.8em;
+    color: #DAA520;
+}
+
+.service-item h3::after {
+    content: ' ★';
+    font-size: 0.8em;
+    color: #DAA520;
 }
 
 .service-item p {
-    color: #666;
+    color: #654321; /* Tmavší hnědá */
     margin-bottom: 20px;
-    line-height: 1.6;
+    line-height: 1.7;
+    font-size: 1rem;
+    font-style: italic;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
 }
 
 .btn-more {
@@ -411,66 +718,116 @@ body {
     .header-content {
         flex-direction: column;
         text-align: center;
+        gap: 15px;
     }
     
     .logo h1 {
         font-size: 2rem;
+        margin-bottom: 0;
     }
     
     /* Zobrazit hamburger tlačítko */
     .nav-header {
         display: flex !important;
+        justify-content: center;
     }
     
-    .mobile-menu-toggle {
-        display: flex !important;
-    }
-    
-    /* Skrýt menu ve výchozím stavu */
-    .nav-menu {
-        display: none;
+        backdrop-filter: blur(20px);
+        z-index: 10000;
         flex-direction: column;
-        width: 100%;
-        background: #654321;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease, opacity 0.3s ease;
-        opacity: 0;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
     
     /* Zobrazit menu když je otevřené */
-    .nav-menu.mobile-open {
-        display: flex !important;
-        max-height: 500px;
-        opacity: 1;
-    }
-    
-    .nav-menu a {
-        padding: 15px 20px;
-        font-size: 1rem;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
+        margin: 10px 0;
+        border: 2px solid transparent;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        min-width: 200px;
         text-align: center;
     }
     
-    .nav-menu li:last-child a {
-        border-bottom: none;
+        background: linear-gradient(135deg, #8B4513, #A0522D);
+        color: white;
+        padding: 15px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 0 4px 20px rgba(139, 69, 19, 0.4);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 1rem;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
     }
     
     #slider-section {
-        height: 300px;
+        height: 280px;
+        margin-top: 0;
     }
     
     .services-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 25px;
+        padding: 0 10px;
+    }
+    
+    .service-item {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .service-item:hover {
+        transform: translateY(-5px);
+    }
+    
+    .service-image {
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .service-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .service-item:hover .service-image img {
+        transform: scale(1.1);
     }
     
     .section-header h2 {
         font-size: 2rem;
+        margin-bottom: 30px;
     }
     
     .content-section {
-        padding: 30px 0;
+        padding: 40px 0;
+    }
+    
+    /* Touch-friendly tlačítka */
+    .btn-gallery {
+        min-height: 48px;
+        padding: 12px 24px;
+        font-size: 1rem;
+        border-radius: 25px;
+        margin-top: 15px;
     }
 }
 
@@ -480,19 +837,50 @@ body {
     }
     
     .logo h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+    }
+    
+    .logo p {
+        font-size: 0.9rem;
     }
     
     #slider-section {
-        height: 250px;
+        height: 220px;
     }
     
     .service-item {
         padding: 20px;
+        margin: 0 5px;
+    }
+    
+    .service-image {
+        height: 180px;
+    }
+    
     }
     
     .footer-content {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 25px;
+        text-align: center;
+    }
+    
+    /* Galerie optimalizace */
+    .photo-gallery {
+        padding: 10px;
+    }
+    
+    .gallery-header {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .gallery-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
     }
 }

@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="css/nivo-slider.css">
     <link rel="stylesheet" href="css/colorbox.css">
 
+    <!-- Mobilní kontakt tlačítko -->
+    <a href="tel:+420773602042" class="mobile-contact-btn">
+        📞 Zavolat
+    </a>
+
     <!-- Galerie CSS -->
     <style>
         .photo-gallery {
@@ -69,6 +74,22 @@
             object-fit: cover;
             display: block;
         }
+        
+        /* Klikací služby - hover efekt */
+        .gallery-trigger {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .gallery-trigger:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
+        }
+        
+        .gallery-trigger:hover .service-image img {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
     </style>
     
     <!-- jQuery a pluginy -->
@@ -97,37 +118,13 @@
         </div>
     </header>
 
-    <!-- Navigace -->
-    <nav id="navigation">
-        <div class="container">
-            <div class="nav-header">
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="#home" class="active">Domů</a></li>
-                <li><a href="#strechy">Střechy & Krovy</a></li>
-                <li><a href="#pergoly">Pergoly</a></li>
-                <li><a href="#drevniky">Dřevníky</a></li>
-                <li><a href="#postele">Masivní postele</a></li>
-                <li><a href="#doplnky">Doplňky z masívu</a></li>
-                <li><a href="#galerie">Galerie</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
-            </ul>
-        </div>
-    </nav>
-
     <!-- Slider -->
     <section id="slider-section">
         <div class="slider-wrapper">
             <div id="slider" class="nivoSlider">
-                <img src="images/slider/signal-2025-09-13-112425_012.jpeg" alt="Tesařské práce Hervert" title="Profesionální tesařské práce a dřevěné konstrukce">
-                <img src="images/slider/signal-2025-09-13-112500_009.jpeg" alt="Kvalitní tesařství" title="Zkušené tesařství s tradicí kvalitního řemesla">
-                <img src="images/slider/signal-2025-09-13-122519.jpeg" alt="Dřevěné konstrukce" title="Masivní dřevěné konstrukce na míru">
-                <img src="images/slider/signal-2025-09-13-122519_003.jpeg" alt="Tesařská řemesla" title="Tradiční tesařské techniky s moderním přístupem">
+                <img src="images/slider/slide1.jpg" alt="Tesařské práce Hervert" title="Profesionální tesařské práce a dřevěné konstrukce">
+                <img src="images/slider/slide2.jpg" alt="Kvalitní tesařství" title="Zkušené tesařství s tradicí kvalitního řemesla">
+                <img src="images/slider/slide3.jpg" alt="Dřevěné konstrukce" title="Masivní dřevěné konstrukce na míru">
             </div>
         </div>
     </section>
@@ -148,59 +145,44 @@
             <section id="services" class="content-section">
                 <h2>Naše služby</h2>
                 <div class="services-grid">
-                    <div class="service-item" id="strechy">
+                    <div class="service-item gallery-trigger" data-category="strechy">
                         <div class="service-image">
-                            <a href="images/gallery/signal-2025-09-13-112434.jpeg" target="_blank" title="Střešní konstrukce - klikněte pro zvětšení">
-                                <img src="images/services/signal-2025-09-13-112434_002.jpeg" alt="Střechy a krovy">
-                            </a>
+                            <img src="images/services/strechy-thumb.jpg" alt="Střechy a krovy">
                         </div>
                         <h3>Střechy & Krovy</h3>
                         <p>Realizace střešních konstrukcí, opravy krovů, zateplovací systémy. Pracujeme s tradičními i moderními materiály.</p>
-                        <a href="#" class="btn-gallery" data-category="strechy">Více fotek</a>
                     </div>
 
-                    <div class="service-item" id="pergoly">
+                    <div class="service-item gallery-trigger" data-category="pergoly">
                         <div class="service-image">
-                            <a href="images/gallery/signal-2025-09-13-112452.jpeg" class="colorbox">
-                                <img src="images/services/signal-2025-09-13-112452_002.jpeg" alt="Dřevěné pergoly a altány">
-                            </a>
+                            <img src="images/services/pergoly-thumb.jpg" alt="Dřevěné pergoly a altány">
                         </div>
                         <h3>Pergoly</h3>
                         <p>Designové pergoly pro zahrady a terasy. Kombinujeme funkcionalitu s estetikou pro vytvoření příjemných venkovních prostorů.</p>
-                        <a href="#" class="btn-gallery" data-category="pergoly">Více fotek</a>
                     </div>
 
-                    <div class="service-item" id="drevniky">
+                    <div class="service-item gallery-trigger" data-category="drevniky">
                         <div class="service-image">
-                            <a href="images/gallery/drevniky-velka1.jpg" class="colorbox">
-                                <img src="images/services/drevniky-thumb.jpg" alt="Dřevníky na míru">
-                            </a>
+                            <img src="images/services/drevniky-thumb.jpg" alt="Dřevníky na míru">
                         </div>
                         <h3>Dřevníky</h3>
                         <p>Praktické dřevníky na míru podle vašich potřeb. Od jednoduchých konstrukcí až po designové prvky zahrady.</p>
-                        <a href="#" class="btn-gallery" data-category="drevniky">Více fotek</a>
                     </div>
 
-                    <div class="service-item" id="postele">
+                    <div class="service-item gallery-trigger" data-category="postele">
                         <div class="service-image">
-                            <a href="images/gallery/postele-velka1.jpg" class="colorbox">
-                                <img src="images/services/postele-thumb.jpg" alt="Masivní postele">
-                            </a>
+                            <img src="images/services/postele-thumb.jpg" alt="Masivní postele">
                         </div>
                         <h3>Masivní postele</h3>
                         <p>Luxusní postele z kvalitního masivního dřeva. Každý kus je unikátní a vyrobený s láskou k detailu.</p>
-                        <a href="#" class="btn-gallery" data-category="postele">Více fotek</a>
                     </div>
 
-                    <div class="service-item" id="doplnky">
+                    <div class="service-item gallery-trigger" data-category="schody">
                         <div class="service-image">
-                            <a href="images/gallery/signal-2025-09-13-112408.jpeg" class="colorbox">
-                                <img src="images/services/signal-2025-09-13-112408_002.jpeg" alt="Doplňky z masívu - schody">
-                            </a>
+                            <img src="images/services/doplnky-thumb.jpg" alt="Doplňky z masívu - schody">
                         </div>
                         <h3>Doplňky z masívu</h3>
                         <p>Různé doplňky a prvky z masivního dřeva - police, stoly, lavice a další prvky pro interiér i exteriér.</p>
-                        <a href="#" class="btn-gallery" data-category="schody">Více fotek</a>
                     </div>
                 </div>
             </section>
@@ -233,16 +215,11 @@
                     <h3>Kontakt</h3>
                     <p>Tel: +420 773 602 042<br>
                     Email: info@tesarstvi-hervert.cz<br>
-                    Adresa: Vaše adresa</p>
+                    Naše kvalitní tesařské práce</p>
                 </div>
                 <div class="footer-section">
-                    <h3>Služby</h3>
-                    <ul>
-                        <li><a href="#strechy">Střechy & Krovy</a></li>
-                        <li><a href="#pergoly">Pergoly</a></li>
-                        <li><a href="#drevniky">Dřevníky</a></li>
-                        <li><a href="#postele">Masivní postele</a></li>
-                    </ul>
+                    <h3>Naše služby</h3>
+                    <p>Specializujeme se na střechy, pergoly, dřevníky a další dřevěné konstrukce z masivního dřeva.</p>
                 </div>
                 <div class="footer-section">
                     <h3>Newsletter</h3>
@@ -262,24 +239,102 @@
     <!-- JavaScript -->
     <script>
         $(document).ready(function() {
-            // Inicializace Nivo Slider
+            // Jednoduchá vlastní logika slideru
+            let currentSlide = 0;
+            let totalSlides = $('#slider img').length; // 3 obrázky
+            let slideInterval;
+            let isCompleted = false;
+            
+            // Inicializace - skryj všechny kromě první
+            $('#slider img').hide();
+            $('#slider img:first').show();
+            
+            // Funkce pro přepnutí na další slide
+            function nextSlide() {
+                if (isCompleted) return;
+                
+                $('#slider img').fadeOut(600);
+                
+                setTimeout(function() {
+                    currentSlide++;
+                    console.log('Přepínám na slide: ' + (currentSlide + 1) + '/' + totalSlides);
+                    
+                    if (currentSlide >= totalSlides) {
+                        // Dokončeno - zůstat na poslední fotce a pak se vrátit na první
+                        currentSlide = 0;
+                        $('#slider img:first').fadeIn(600);
+                        
+                        setTimeout(function() {
+                            isCompleted = true;
+                            console.log('🎯 Slider dokončen - zůstává na první fotce');
+                            
+                            // Skrýt navigaci po dokončení
+                            $('.nivo-directionNav, .nivo-controlNav').fadeOut(1000);
+                            $('#restart-slider').fadeIn(1000);
+                        }, 1000);
+                    } else {
+                        $('#slider img').eq(currentSlide).fadeIn(600);
+                    }
+                }, 300);
+            }
+            
+            // Spustit slideshow
+            slideInterval = setInterval(nextSlide, 6000); // 6 sekund mezi slidy
+            
+            // Zastavit po dokončení
+            setTimeout(function() {
+                if (slideInterval) {
+                    clearInterval(slideInterval);
+                }
+            }, (totalSlides * 6000) + 2000);
+            
+            // Inicializace Nivo Slider jen pro design (bez automatiky)
             $('#slider').nivoSlider({
                 effect: 'fade',
-                slices: 15,
-                boxCols: 8,
-                boxRows: 4,
-                animSpeed: 800,
-                pauseTime: 4000,
-                startSlide: 0,
+                animSpeed: 600,
+                pauseTime: 999999, // Velmi dlouhá pauza - řídíme to sami
                 directionNav: true,
                 controlNav: true,
-                pauseOnHover: true,
-                manualAdvance: false,
+                pauseOnHover: false,
+                manualAdvance: true, // Pouze manuální ovládání
                 randomStart: false
             });
 
-            // Galerie fotek
-            $('.btn-gallery').on('click', function(e) {
+            // Přidat restart tlačítko pro slider
+            $('<button id="restart-slider" style="position: absolute; top: 10px; right: 10px; background: rgba(139,69,19,0.8); color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 12px; z-index: 100; display: none;">🔄 Restart</button>')
+                .appendTo('#slider-section')
+                .on('click', function() {
+                    // Reset všech proměnných
+                    currentSlide = 0;
+                    isCompleted = false;
+                    
+                    // Vyčistit starý interval
+                    if (slideInterval) {
+                        clearInterval(slideInterval);
+                    }
+                    
+                    // Zobrazit jen první fotku
+                    $('#slider img').hide();
+                    $('#slider img:first').show();
+                    
+                    // Spustit slideshow znovu
+                    slideInterval = setInterval(nextSlide, 6000);
+                    
+                    // Zastavit po dokončení
+                    setTimeout(function() {
+                        if (slideInterval) {
+                            clearInterval(slideInterval);
+                        }
+                    }, (totalSlides * 6000) + 2000);
+                    
+                    // Obnovit navigaci a skrýt restart
+                    $('.nivo-directionNav, .nivo-controlNav').fadeIn(500);
+                    $(this).hide();
+                    console.log('🔄 Slider restartován');
+                });
+
+            // Galerie fotek - klik na celé okno služby
+            $('.gallery-trigger').on('click', function(e) {
                 e.preventDefault();
                 var category = $(this).data('category');
 
@@ -288,36 +343,66 @@
                     'strechy': {
                         title: 'Střechy & Krovy',
                         photos: [
-                            'images/gallery/signal-2025-09-13-112434.jpeg',
-                            'images/gallery/signal-2025-09-13-112434_002.jpeg',
-                            'images/gallery/signal-2025-09-13-112434_003.jpeg',
-                            'images/gallery/signal-2025-09-13-112434_004.jpeg',
-                            'images/gallery/signal-2025-09-13-112434_005.jpeg',
-                            'images/gallery/signal-2025-09-13-112434_006.jpeg'
+                            'images/gallery/strechy-1.jpg',
+                            'images/gallery/strechy-2.jpg',
+                            'images/gallery/strechy-3.jpg',
+                            'images/gallery/strechy-4.jpg',
+                            'images/gallery/strechy-5.jpg',
+                            'images/gallery/strechy-6.jpg',
+                            'images/gallery/strechy-7.jpg',
+                            'images/gallery/strechy-8.jpg',
+                            'images/gallery/strechy-9.jpg',
+                            'images/gallery/strechy-10.jpg',
+                            'images/gallery/strechy-11.jpg'
                         ]
                     },
                     'pergoly': {
                         title: 'Pergoly & Altány',
                         photos: [
-                            'images/gallery/signal-2025-09-13-112452.jpeg',
-                            'images/gallery/signal-2025-09-13-112452_002.jpeg',
-                            'images/gallery/signal-2025-09-13-112452_003.jpeg',
-                            'images/gallery/signal-2025-09-13-112452_004.jpeg',
-                            'images/gallery/signal-2025-09-13-112452_005.jpeg',
-                            'images/gallery/signal-2025-09-13-112452_006.jpeg',
-                            'images/gallery/signal-2025-09-13-112452_007.jpeg',
-                            'images/gallery/signal-2025-09-13-112452_008.jpeg'
+                            'images/gallery/pergoly-1.jpg',
+                            'images/gallery/pergoly-2.jpg',
+                            'images/gallery/pergoly-3.jpg',
+                            'images/gallery/pergoly-4.jpg',
+                            'images/gallery/pergoly-5.jpg',
+                            'images/gallery/pergoly-6.jpg',
+                            'images/gallery/pergoly-7.jpg',
+                            'images/gallery/pergoly-8.jpg',
+                            'images/gallery/pergoly-9.jpg',
+                            'images/gallery/pergoly-10.jpg',
+                            'images/gallery/pergoly-11.jpg',
+                            'images/gallery/pergoly-12.jpg',
+                            'images/gallery/pergoly-13.jpg',
+                            'images/gallery/pergoly-14.jpg',
+                            'images/gallery/pergoly-15.jpg',
+                            'images/gallery/pergoly-16.jpg',
+                            'images/gallery/pergoly-17.jpg',
+                            'images/gallery/pergoly-18.jpg',
+                            'images/gallery/pergoly-19.jpg',
+                            'images/gallery/pergoly-20.jpg',
+                            'images/gallery/pergoly-21.jpg'
+                        ]
+                    },
+                    'drevniky': {
+                        title: 'Dřevníky',
+                        photos: [
+                            'images/gallery/drevniky-1.jpg',
+                            'images/gallery/drevniky-2.jpg'
                         ]
                     },
                     'schody': {
-                        title: 'Doplňky z masívu - Schody',
+                        title: 'Doplňky z masívu',
                         photos: [
-                            'images/gallery/signal-2025-09-13-112408.jpeg',
-                            'images/gallery/signal-2025-09-13-112408_002.jpeg',
-                            'images/gallery/signal-2025-09-13-112408_003.jpeg',
-                            'images/gallery/signal-2025-09-13-112408_004.jpeg',
-                            'images/gallery/signal-2025-09-13-112408_005.jpeg',
-                            'images/gallery/signal-2025-09-13-112408_006.jpeg'
+                            'images/gallery/doplnky-1.jpg',
+                            'images/gallery/doplnky-2.jpg',
+                            'images/gallery/doplnky-3.jpg',
+                            'images/gallery/doplnky-4.jpg',
+                            'images/gallery/doplnky-5.jpg',
+                            'images/gallery/doplnky-6.jpg',
+                            'images/gallery/doplnky-7.jpg',
+                            'images/gallery/doplnky-8.jpg',
+                            'images/gallery/doplnky-9.jpg',
+                            'images/gallery/doplnky-10.jpg',
+                            'images/gallery/doplnky-11.jpg'
                         ]
                     }
                 };
@@ -355,45 +440,6 @@
                     }
                 });
             }
-
-            // Smooth scrolling pro navigaci
-            $('a[href^="#"]').on('click', function(e) {
-                e.preventDefault();
-                var target = this.hash;
-                var $target = $(target);
-                if ($target.length) {
-                    $('html, body').animate({
-                        'scrollTop': $target.offset().top - 80
-                    }, 800, 'swing');
-                }
-            });
-
-            // Aktivní menu item
-            $('.nav-menu a').on('click', function() {
-                $('.nav-menu a').removeClass('active');
-                $(this).addClass('active');
-                
-                // Zavřít mobile menu po kliknutí na odkaz
-                if (window.innerWidth <= 768) {
-                    $('#nav-menu').removeClass('mobile-open');
-                    $('#mobile-menu-toggle').removeClass('active');
-                }
-            });
-
-            // Mobile menu toggle
-            $('#mobile-menu-toggle').on('click', function(e) {
-                e.preventDefault();
-                $(this).toggleClass('active');
-                $('#nav-menu').toggleClass('mobile-open');
-            });
-
-            // Zavřít mobile menu při resize na desktop
-            $(window).on('resize', function() {
-                if (window.innerWidth > 768) {
-                    $('#nav-menu').removeClass('mobile-open');
-                    $('#mobile-menu-toggle').removeClass('active');
-                }
-            });
         });
     </script>
 </body>
