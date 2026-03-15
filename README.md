@@ -1,99 +1,201 @@
-# Tesařské stránky
+# Tesařství Hervert
 
-Profesionální webové stránky pro tesařské práce inspirované designem stránek sperky-janovsky.cz.
+Statický prezentační web s vlastním klientským adminem pro správu fotek v jednotlivých sekcích.
+
+## Jak to funguje
+
+Veřejná část webu zůstává statická:
+
+- homepage běží dál z `index.html`
+- texty a základní struktura sekcí jsou v `data/site-content.json`
+
+Správa fotek je oddělená:
+
+- klient se přihlašuje na `https://tesarstvihervert.cz/admin/`
+- přihlášení používá vlastní jméno a heslo
+- po přihlášení může vybírat sekce webu a přidávat nebo mazat fotky
+- fotky se ukládají do Cloudflare R2
+- metadata o fotkách jsou v Cloudflare D1
+- veřejný web si galerie načítá z backendu automaticky
+
+## Důležitá technická poznámka
+
+Tohle už není čisté GitHub Pages řešení.
+Bez backendu nejde bezpečně udělat:
+
+- vlastní login jméno/heslo
+- upload obrázků
+- mazání obrázků
+- řízení přístupu klienta
+
+Proto je součástí projektu `cms-worker/`, který běží na Cloudflare Workers.
 
 ## Struktura projektu
 
-```
-├── index.html              # Hlavní HTML stránka
+```text
+├── admin/
+│   ├── app.js
+│   └── index.html
+├── cms-worker/
+│   ├── scripts/hash-password.mjs
+│   ├── src/index.js
+│   ├── package.json
+│   ├── schema.sql
+│   └── wrangler.toml
 ├── css/
-│   ├── style.css          # Hlavní CSS styly
-│   ├── nivo-slider.css    # Styly pro image slider
-│   └── colorbox.css       # Styly pro lightbox galerii
-├── js/
-│   ├── jquery.nivo.slider.js     # Nivo Slider plugin
-│   └── jquery.colorbox-min.js    # Colorbox plugin
+├── data/
+│   └── site-content.json
 ├── images/
-│   ├── slider/            # Obrázky pro hlavní slider
-│   ├── services/          # Náhledové obrázky služeb
-│   └── gallery/           # Velké obrázky pro galerii
-└── README.md
+├── js/
+│   ├── jquery.colorbox-min.js
+│   ├── jquery.nivo.slider.js
+│   └── main.js
+└── index.html
 ```
 
-## Použité technologie
+## Lokální spuštění webu
 
-- **HTML5** - sémantické značkování
-- **CSS3** - moderní styly s gradiengy a animacemi
-- **jQuery** - JavaScript interaktivita
-- **Nivo Slider** - automatický slider obrázků
-- **Colorbox** - lightbox pro zvětšování obrázků
-- **Responzivní design** - přizpůsobení všem zařízením
+```bash
+python3 -m http.server 8000
+```
 
-## Barvy a design
+Pak otevři:
 
-- **Primární barva**: #8B4513 (hnědá - dřevo)
-- **Sekundární barva**: #A0522D (světlejší hnědá)
-- **Akcent**: #FFD700 (zlatá)
-- **Pozadí**: #f5f5f5 (světle šedá)
+- `http://localhost:8000/`
+- `http://localhost:8000/admin/`
 
-## Sekce stránek
+Pozor:
 
-1. **Hlavička** - logo, kontaktní informace
-2. **Navigace** - menu s kategoriemi služeb
-3. **Slider** - automatické prezentace projektů
-4. **Služby** - 5 hlavních kategorií:
-   - Střechy & Krovy
-   - Pergoly
-   - Dřevníky
-   - Masivní postele
-   - Doplňky z masívu
-5. **O firmě** - představení a výhody
-6. **Patička** - kontakt, newsletter, odkazy
+- bez běžícího `cms-worker` backendu nebude lokální přihlášení fungovat
+- veřejný web ale poběží i bez backendu, jen použije lokální galerie z `data/site-content.json`
 
-## Potřebné obrázky
+## Produkční architektura
 
-Vytvořte následující složky a přidejte obrázky:
+- veřejný web: `https://tesarstvihervert.cz`
+- admin stránka: `https://tesarstvihervert.cz/admin/`
+- backend API + obrázky: `https://tesarstvi-hervert-cms.sjeror11.workers.dev`
 
-### Slider obrázky (1200x500px):
-- `images/slider/strechy1.jpg` - střešní konstrukce
-- `images/slider/pergoly1.jpg` - dřevěné pergoly
-- `images/slider/drevniky1.jpg` - dřevníky
-- `images/slider/postele1.jpg` - masivní postele
+Backend zajišťuje:
 
-### Náhledové obrázky služeb (300x200px):
-- `images/services/strechy-thumb.jpg`
-- `images/services/pergoly-thumb.jpg`
-- `images/services/drevniky-thumb.jpg`
-- `images/services/postele-thumb.jpg`
-- `images/services/doplnky-thumb.jpg`
+- `POST /api/login`
+- `POST /api/logout`
+- `GET /api/me`
+- `GET /api/public/galleries`
+- `GET /api/admin/photos`
+- `POST /api/admin/photos/upload`
+- `DELETE /api/admin/photos/:id`
+- `GET /media/...`
 
-### Galerie (velké obrázky 1024x768px):
-- `images/gallery/strechy-velka1.jpg`
-- `images/gallery/pergoly-velka1.jpg`
-- `images/gallery/drevniky-velka1.jpg`
-- `images/gallery/postele-velka1.jpg`
-- `images/gallery/doplnky-velka1.jpg`
+## Co je potřeba nasadit v Cloudflare
 
-## Úpravy před spuštěním
+### 1. Přihlášení do Cloudflare
 
-1. **Kontaktní údaje** - upravte v HTML:
-   - Telefon: `+420 XXX XXX XXX`
-   - Email: `info@tesarske-prace.cz`
-   - Adresa
+```bash
+cd cms-worker
+npm install
+npx wrangler login
+```
 
-2. **Přidejte obrázky** do odpovídajících složek
+### 2. Vytvořit R2 bucket
 
-3. **Otevřete** `index.html` v prohlížeči
+```bash
+npx wrangler r2 bucket create tesarstvi-hervert-media
+```
 
-## Funkce
+### 3. Vytvořit D1 databázi
 
-- ✅ Automatický slider obrázků
-- ✅ Lightbox galerie 
-- ✅ Responzivní design
-- ✅ Smooth scrolling navigace
-- ✅ Newsletter formulář
-- ✅ SEO optimalizace
+```bash
+npx wrangler d1 create tesarstvi-hervert-cms
+```
 
-## Licence
+Po vytvoření databáze Cloudflare vypíše `database_id`.
+To vlož do [cms-worker/wrangler.toml](/home/laky/tesarstvi-hervert/cms-worker/wrangler.toml) místo `REPLACE_WITH_D1_DATABASE_ID`.
 
-Volné použití pro komerční účely. Inspirováno designem sperky-janovsky.cz s vlastními úpravami pro tesařskou tematiku.
+### 4. Inicializovat databázi
+
+Lokálně:
+
+```bash
+npx wrangler d1 execute tesarstvi-hervert-cms --local --file=./schema.sql
+```
+
+Produkčně:
+
+```bash
+npx wrangler d1 execute tesarstvi-hervert-cms --remote --file=./schema.sql
+```
+
+### 5. Vygenerovat hash hesla
+
+```bash
+npm run hash-password -- "sem-das-skutecne-heslo"
+```
+
+Výstup bude ve formátu `pbkdf2_sha256$...`.
+
+### 6. Nastavit secrets
+
+```bash
+npx wrangler secret put ADMIN_PASSWORD_HASH
+npx wrangler secret put SESSION_SECRET
+```
+
+Do `SESSION_SECRET` dej dlouhý náhodný tajný řetězec.
+
+### 7. Upravit username
+
+V [cms-worker/wrangler.toml](/home/laky/tesarstvi-hervert/cms-worker/wrangler.toml) nastav:
+
+- `ADMIN_USERNAME`
+- případně `MAX_UPLOAD_SIZE_BYTES`
+- případně `SESSION_TTL_SECONDS`
+
+### 8. DNS a custom domain
+
+Backend je připravený jako Cloudflare Worker Custom Domain:
+
+- `cms.tesarstvihervert.cz`
+
+Postup:
+
+1. Otevři Cloudflare zónu `tesarstvihervert.cz`.
+2. Zkontroluj, že pro `cms.tesarstvihervert.cz` už neexistuje `A`, `AAAA` ani `CNAME`.
+3. Pokud existuje, smaž ho.
+4. Nasadíš worker příkazem `npx wrangler deploy`.
+5. Cloudflare vytvoří custom domain a certifikát automaticky.
+
+### 9. Deploy workeru
+
+```bash
+npx wrangler deploy
+```
+
+### 10. Kontrola
+
+Po nasazení ověř:
+
+- `https://tesarstvi-hervert-cms.sjeror11.workers.dev/health`
+- `https://tesarstvihervert.cz/admin/`
+
+## Co klient umí
+
+Po přihlášení klient:
+
+- vybere sekci jako `Střechy`, `Pergoly`, `Dřevníky`
+- nahraje novou fotku
+- smaže existující fotku
+- změny se projeví na webu bez úpravy HTML
+
+Pro nejrychlejší nasazení použij i [DEPLOY-CHECKLIST.md](/home/laky/tesarstvi-hervert/DEPLOY-CHECKLIST.md).
+
+## Co systém zatím neumí
+
+Aktuální verze zatím neřeší:
+
+- více uživatelů
+- reset hesla e-mailem
+- změnu pořadí fotek drag and drop
+- úpravu textů přes admin
+- hromadný upload více fotek najednou
+
+To jde doplnit později, ale pro požadavek klienta na přihlášení a správu fotek po sekcích už je připravený správný základ.

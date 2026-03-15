@@ -1,0 +1,14 @@
+{
+  "name": "tesarstvi-hervert-cms-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "check": "node --check src/index.js",
+    "hash-password": "node scripts/hash-password.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.8.0"
+  }
+}

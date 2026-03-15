@@ -1,0 +1,160 @@
+{
+  "seo": {
+    "title": "Tesařství Hervert - Kvalitní střechy a dřevěné konstrukce",
+    "description": "Tesařství Hervert - Profesionální tesařské práce, střechy, pergoly, dřevníky a masivní nábytek z kvalitního dřeva."
+  },
+  "company": {
+    "name": "Tesařství Hervert",
+    "tagline": "Kvalitní řemeslo z masivního dřeva",
+    "phoneDisplay": "+420 773 602 042",
+    "phoneHref": "tel:+420773602042",
+    "emailDisplay": "hery.hervert@seznam.cz",
+    "emailHref": "mailto:hery.hervert@seznam.cz"
+  },
+  "slider": [
+    {
+      "src": "images/slider/slide1.jpg",
+      "alt": "Tesařské práce Hervert",
+      "title": "Profesionální tesařské práce a dřevěné konstrukce"
+    },
+    {
+      "src": "images/slider/slide2.jpg",
+      "alt": "Kvalitní tesařství",
+      "title": "Zkušené tesařství s tradicí kvalitního řemesla"
+    },
+    {
+      "src": "images/slider/slide3.jpg",
+      "alt": "Dřevěné konstrukce",
+      "title": "Masivní dřevěné konstrukce na míru"
+    }
+  ],
+  "intro": {
+    "heading": "Profesionální tesařské práce",
+    "text": "Specializujeme se na kvalitní tesařské práce, výrobu střešních krovů, pergol, dřevníků a masivního nábytku. Používáme pouze kvalitní materiály a tradiční řemeslné postupy."
+  },
+  "services": [
+    {
+      "slug": "strechy",
+      "title": "Střechy & Krovy",
+      "description": "Realizace střešních konstrukcí, opravy krovů, zateplovací systémy. Pracujeme s tradičními i moderními materiály.",
+      "thumb": "images/services/strechy-thumb.jpg",
+      "thumbAlt": "Střechy a krovy",
+      "galleryTitle": "Střechy & Krovy",
+      "photos": [
+        "images/gallery/strechy-1.jpg",
+        "images/gallery/strechy-2.jpg",
+        "images/gallery/strechy-3.jpg",
+        "images/gallery/strechy-4.jpg",
+        "images/gallery/strechy-5.jpg",
+        "images/gallery/strechy-6.jpg",
+        "images/gallery/strechy-7.jpg",
+        "images/gallery/strechy-8.jpg",
+        "images/gallery/strechy-9.jpg",
+        "images/gallery/strechy-10.jpg",
+        "images/gallery/strechy-11.jpg",
+        "images/gallery/strechy-12.jpg"
+      ]
+    },
+    {
+      "slug": "pergoly",
+      "title": "Pergoly",
+      "description": "Designové pergoly pro zahrady a terasy. Kombinujeme funkcionalitu s estetikou pro vytvoření příjemných venkovních prostorů.",
+      "thumb": "images/services/pergoly-thumb.jpg",
+      "thumbAlt": "Dřevěné pergoly a altány",
+      "galleryTitle": "Pergoly & Altány",
+      "photos": [
+        "images/gallery/pergoly-1.jpg",
+        "images/gallery/pergoly-2.jpg",
+        "images/gallery/pergoly-3.jpg",
+        "images/gallery/pergoly-4.jpg",
+        "images/gallery/pergoly-5.jpg",
+        "images/gallery/pergoly-6.jpg",
+        "images/gallery/pergoly-7.jpg",
+        "images/gallery/pergoly-8.jpg",
+        "images/gallery/pergoly-9.jpg",
+        "images/gallery/pergoly-10.jpg",
+        "images/gallery/pergoly-11.jpg",
+        "images/gallery/pergoly-12.jpg",
+        "images/gallery/pergoly-13.jpg",
+        "images/gallery/pergoly-14.jpg",
+        "images/gallery/pergoly-15.jpg",
+        "images/gallery/pergoly-16.jpg",
+        "images/gallery/pergoly-17.jpg",
+        "images/gallery/pergoly-18.jpg",
+        "images/gallery/pergoly-19.jpg",
+        "images/gallery/pergoly-20.jpg",
+        "images/gallery/pergoly-21.jpg"
+      ]
+    },
+    {
+      "slug": "drevniky",
+      "title": "Dřevníky",
+      "description": "Praktické dřevníky na míru podle vašich potřeb. Od jednoduchých konstrukcí až po designové prvky zahrady.",
+      "thumb": "images/services/drevniky-thumb.jpg",
+      "thumbAlt": "Dřevníky na míru",
+      "galleryTitle": "Dřevníky",
+      "photos": [
+        "images/gallery/drevniky-1.jpg",
+        "images/gallery/drevniky-2.jpg"
+      ]
+    },
+    {
+      "slug": "postele",
+      "title": "Masivní postele",
+      "description": "Luxusní postele z kvalitního masivního dřeva. Každý kus je unikátní a vyrobený s láskou k detailu.",
+      "thumb": "images/services/postele-thumb.jpg",
+      "thumbAlt": "Masivní postele",
+      "galleryTitle": "Masivní postele",
+      "photos": [
+        "images/gallery/postele-1.jpg",
+        "images/gallery/postele-2.jpg",
+        "images/gallery/postele-3.jpg"
+      ]
+    },
+    {
+      "slug": "doplnky",
+      "title": "Doplňky z masívu",
+      "description": "Různé doplňky a prvky z masivního dřeva - police, stoly, lavice a další prvky pro interiér i exteriér.",
+      "thumb": "images/services/doplnky-thumb.jpg",
+      "thumbAlt": "Doplňky z masívu",
+      "galleryTitle": "Doplňky z masívu",
+      "photos": [
+        "images/gallery/doplnky-1.jpg",
+        "images/gallery/doplnky-2.jpg",
+        "images/gallery/doplnky-3.jpg",
+        "images/gallery/doplnky-4.jpg",
+        "images/gallery/doplnky-5.jpg",
+        "images/gallery/doplnky-6.jpg",
+        "images/gallery/doplnky-7.jpg",
+        "images/gallery/doplnky-8.jpg",
+        "images/gallery/doplnky-9.jpg",
+        "images/gallery/doplnky-10.jpg",
+        "images/gallery/doplnky-11.jpg",
+        "images/gallery/doplnky-12.jpg",
+        "images/gallery/doplnky-13.jpg",
+        "images/gallery/doplnky-14.jpg"
+      ]
+    }
+  ],
+  "about": {
+    "heading": "O naší firmě",
+    "paragraphs": [
+      "Jsme rodinná firma s dlouholetou tradicí v tesařském řemesle. Specializujeme se na kvalitní práce z masivního dřeva, od střešních konstrukcí až po nábytek na míru.",
+      "Naším cílem je spokojenost zákazníků a vytváření kvalitních výrobků, které vydrží generace. Používáme pouze ověřené materiály a tradiční řemeslné postupy kombinované s moderními technologiemi."
+    ],
+    "benefits": [
+      "Více než 12 let zkušeností",
+      "Kvalitní materiály",
+      "Individuální přístup",
+      "Záruka na všechny práce"
+    ]
+  },
+  "footer": {
+    "contactText": "Tel: +420 773 602 042\nEmail: hery.hervert@seznam.cz\nNaše kvalitní tesařské práce",
+    "servicesText": "Specializujeme se na střechy, pergoly, dřevníky a další dřevěné konstrukce z masivního dřeva.",
+    "newsletterHeading": "Newsletter",
+    "newsletterText": "Přihlaste se k odběru novinek",
+    "newsletterEnabled": true,
+    "copyright": "© 2024 Tesařství Hervert. Všechna práva vyhrazena."
+  }
+}
