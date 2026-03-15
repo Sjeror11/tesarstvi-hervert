@@ -17,6 +17,7 @@ const elements = {
     loginStatus: document.getElementById("login-status"),
     adminStatus: document.getElementById("admin-status"),
     adminUser: document.getElementById("admin-user"),
+    passwordCard: document.getElementById("password-card"),
     serviceSelect: document.getElementById("service-select"),
     uploadForm: document.getElementById("upload-form"),
     passwordForm: document.getElementById("password-form"),
@@ -219,12 +220,14 @@ async function handlePasswordChange(event) {
 function showLogin() {
     elements.loginView.classList.remove("hidden");
     elements.adminView.classList.add("hidden");
+    elements.passwordCard.classList.add("hidden");
     hideStatus(elements.adminStatus);
 }
 
 function showAdmin() {
     elements.loginView.classList.add("hidden");
     elements.adminView.classList.remove("hidden");
+    elements.passwordCard.classList.remove("hidden");
     elements.adminUser.textContent = state.user ? "Přihlášený uživatel: " + state.user.username : "";
 }
 

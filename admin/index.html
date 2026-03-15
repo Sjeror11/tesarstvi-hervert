@@ -51,6 +51,13 @@
             backdrop-filter: blur(10px);
         }
 
+        .hero-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(300px, 0.9fr);
+            gap: 20px;
+            align-items: start;
+        }
+
         .hero h1 {
             margin: 0;
             font-size: clamp(32px, 6vw, 54px);
@@ -63,6 +70,45 @@
             color: var(--muted);
             font-size: 18px;
             line-height: 1.5;
+        }
+
+        .hero-copy {
+            min-width: 0;
+        }
+
+        .password-card {
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.78);
+            box-shadow: 0 10px 30px rgba(45, 29, 18, 0.08);
+        }
+
+        .password-card .panel-inner {
+            padding: 18px;
+        }
+
+        .password-card h3 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .password-card p {
+            margin: 8px 0 0;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .password-card .stack {
+            gap: 12px;
+        }
+
+        .password-card input {
+            padding: 12px 14px;
+        }
+
+        .password-card button {
+            padding: 12px 16px;
+            width: 100%;
         }
 
         .panel {
@@ -254,6 +300,10 @@
                 margin: 10px auto 24px;
             }
 
+            .hero-layout {
+                grid-template-columns: 1fr;
+            }
+
             .hero,
             .panel-inner {
                 padding: 18px;
@@ -268,8 +318,35 @@
 <body>
     <div class="shell">
         <section class="hero">
-            <h1>Správa fotek</h1>
-            <p>Přihlášení pro klienta. Po přihlášení lze vybírat sekce webu a do každé přidávat nebo mazat fotografie bez zásahu do kódu.</p>
+            <div class="hero-layout">
+                <div class="hero-copy">
+                    <h1>Správa fotek</h1>
+                    <p>Přihlášení pro klienta. Po přihlášení lze vybírat sekce webu a do každé přidávat nebo mazat fotografie bez zásahu do kódu.</p>
+                </div>
+
+                <section id="password-card" class="password-card hidden">
+                    <div class="panel-inner stack">
+                        <div>
+                            <h3>Změna hesla</h3>
+                            <p>Změní heslo pro přihlášení do této administrace.</p>
+                        </div>
+
+                        <form id="password-form" class="stack">
+                            <div class="field">
+                                <label for="current-password">Současné heslo</label>
+                                <input id="current-password" name="currentPassword" type="password" autocomplete="current-password" required>
+                            </div>
+
+                            <div class="field">
+                                <label for="new-password">Nové heslo</label>
+                                <input id="new-password" name="newPassword" type="password" autocomplete="new-password" minlength="8" required>
+                            </div>
+
+                            <button type="submit">Uložit nové heslo</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
         </section>
 
         <section id="login-view" class="panel login-card">
@@ -329,29 +406,6 @@
 
                     <button type="submit">Přidat fotku</button>
                 </form>
-
-                <section class="panel">
-                    <div class="panel-inner stack">
-                        <div>
-                            <h3>Změna hesla</h3>
-                            <p>Změní heslo pro přihlášení do této administrace.</p>
-                        </div>
-
-                        <form id="password-form" class="stack">
-                            <div class="field">
-                                <label for="current-password">Současné heslo</label>
-                                <input id="current-password" name="currentPassword" type="password" autocomplete="current-password" required>
-                            </div>
-
-                            <div class="field">
-                                <label for="new-password">Nové heslo</label>
-                                <input id="new-password" name="newPassword" type="password" autocomplete="new-password" minlength="8" required>
-                            </div>
-
-                            <button type="submit">Uložit nové heslo</button>
-                        </form>
-                    </div>
-                </section>
 
                 <div id="admin-status" class="status success hidden"></div>
 
