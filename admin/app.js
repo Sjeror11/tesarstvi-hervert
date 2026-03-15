@@ -6,7 +6,8 @@ const state = {
     services: [],
     selectedService: "",
     photosByService: {},
-    user: null
+    user: null,
+    authToken: ""
 };
 
 const elements = {
@@ -66,6 +67,8 @@ async function loadServices() {
 }
 
 async function restoreSession() {
+    state.authToken = readToken();
+
     try {
         const me = await apiRequest("/api/me");
         state.user = me.user;
@@ -94,6 +97,7 @@ async function handleLogin(event) {
         });
 
         state.user = response.user;
+        state.authToken = response.token || "";
         storeToken(response.token);
         elements.loginForm.reset();
         showAdmin();
@@ -111,6 +115,7 @@ async function handleLogout() {
     }
 
     state.user = null;
+    state.authToken = "";
     state.photosByService = {};
     clearToken();
     showLogin();
@@ -125,7 +130,7 @@ async function refreshPhotos() {
     hideStatus(elements.adminStatus);
 
     try {
-        const response = await apiRequest("/api/admin/photos");
+        const response = await apiRequest("/api/admin/photos", { allowPublicFallback: true });
         state.photosByService = response.photosByService || {};
         renderGallery();
         showAdminStatus("Galerie byla načtena.", "success");
@@ -236,7 +241,7 @@ function renderGallery() {
 }
 
 async function apiRequest(path, options = {}) {
-    const token = readToken();
+    const token = state.authToken || readToken();
     const headers = new Headers(options.headers || {});
 
     if (token) {
@@ -252,6 +257,14 @@ async function apiRequest(path, options = {}) {
     const contentType = response.headers.get("content-type") || "";
     const isJson = contentType.includes("application/json");
     const payload = isJson ? await response.json() : null;
+
+    if (options.allowPublicFallback && response.status === 401) {
+        const fallbackResponse = await fetch(CMS_API_BASE + "/api/public/galleries", {
+            cache: "no-store"
+        });
+        const fallbackPayload = await fallbackResponse.json();
+        return fallbackPayload;
+    }
 
     if (!response.ok) {
         throw new Error(payload && payload.error ? payload.error : "Požadavek se nepodařil.");
