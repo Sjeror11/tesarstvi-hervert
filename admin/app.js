@@ -1,5 +1,6 @@
 const CMS_API_BASE = "https://tesarstvi-hervert-cms.sjeror11.workers.dev";
 const STATIC_CONTENT_URL = "../data/site-content.json";
+const SESSION_TOKEN_KEY = "th_admin_token";
 
 const state = {
     services: [],
@@ -93,6 +94,7 @@ async function handleLogin(event) {
         });
 
         state.user = response.user;
+        storeToken(response.token);
         elements.loginForm.reset();
         showAdmin();
         await refreshPhotos();
@@ -110,6 +112,7 @@ async function handleLogout() {
 
     state.user = null;
     state.photosByService = {};
+    clearToken();
     showLogin();
 }
 
@@ -233,8 +236,16 @@ function renderGallery() {
 }
 
 async function apiRequest(path, options = {}) {
+    const token = readToken();
+    const headers = new Headers(options.headers || {});
+
+    if (token) {
+        headers.set("Authorization", "Bearer " + token);
+    }
+
     const response = await fetch(CMS_API_BASE + path, {
         ...options,
+        headers,
         credentials: "include"
     });
 
@@ -279,4 +290,20 @@ function escapeHtml(value) {
 
 function escapeAttribute(value) {
     return escapeHtml(value);
+}
+
+function storeToken(token) {
+    if (!token) {
+        return;
+    }
+
+    window.sessionStorage.setItem(SESSION_TOKEN_KEY, token);
+}
+
+function readToken() {
+    return window.sessionStorage.getItem(SESSION_TOKEN_KEY) || "";
+}
+
+function clearToken() {
+    window.sessionStorage.removeItem(SESSION_TOKEN_KEY);
 }

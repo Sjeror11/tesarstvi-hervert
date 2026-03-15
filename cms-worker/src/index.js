@@ -117,7 +117,7 @@ async function handleLogin(request, env) {
     const headers = buildJsonHeaders(request, env);
     headers.append("Set-Cookie", serializeCookie(SESSION_COOKIE_NAME, token, ttlSeconds));
 
-    return new Response(JSON.stringify({ ok: true, user: { username } }), {
+    return new Response(JSON.stringify({ ok: true, token, user: { username } }), {
         status: 200,
         headers
     });
@@ -339,8 +339,9 @@ async function createSessionToken(payload, secret, ttlSeconds) {
 
 async function getSessionFromRequest(request, env) {
     ensureRequiredEnv(env, ["SESSION_SECRET"]);
+    const headerToken = getBearerToken(request.headers.get("Authorization") || "");
     const cookies = parseCookies(request.headers.get("Cookie") || "");
-    const token = cookies[SESSION_COOKIE_NAME];
+    const token = headerToken || cookies[SESSION_COOKIE_NAME];
 
     if (!token) {
         return null;
@@ -367,6 +368,14 @@ async function getSessionFromRequest(request, env) {
     }
 
     return payload;
+}
+
+function getBearerToken(value) {
+    if (!value || !value.startsWith("Bearer ")) {
+        return "";
+    }
+
+    return value.slice("Bearer ".length).trim();
 }
 
 async function signValue(value, secret) {
