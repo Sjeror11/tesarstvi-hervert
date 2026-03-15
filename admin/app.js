@@ -19,6 +19,7 @@ const elements = {
     adminUser: document.getElementById("admin-user"),
     serviceSelect: document.getElementById("service-select"),
     uploadForm: document.getElementById("upload-form"),
+    passwordForm: document.getElementById("password-form"),
     galleryGrid: document.getElementById("gallery-grid"),
     galleryTitle: document.getElementById("gallery-title"),
     galleryCount: document.getElementById("gallery-count"),
@@ -43,6 +44,7 @@ function bindEvents() {
     elements.loginForm.addEventListener("submit", handleLogin);
     elements.serviceSelect.addEventListener("change", handleServiceChange);
     elements.uploadForm.addEventListener("submit", handleUpload);
+    elements.passwordForm.addEventListener("submit", handlePasswordChange);
     elements.refreshButton.addEventListener("click", refreshPhotos);
     elements.logoutButton.addEventListener("click", handleLogout);
 }
@@ -189,6 +191,28 @@ async function handleDelete(photoId) {
         showAdminStatus("Fotka byla smazána.", "success");
     } catch (error) {
         showAdminStatus(error.message || "Mazání se nepodařilo.", "error");
+    }
+}
+
+async function handlePasswordChange(event) {
+    event.preventDefault();
+    hideStatus(elements.adminStatus);
+
+    const formData = new FormData(elements.passwordForm);
+    const currentPassword = String(formData.get("currentPassword") || "");
+    const newPassword = String(formData.get("newPassword") || "");
+
+    try {
+        await apiRequest("/api/admin/change-password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ currentPassword, newPassword })
+        });
+
+        elements.passwordForm.reset();
+        showAdminStatus("Heslo bylo změněno.", "success");
+    } catch (error) {
+        showAdminStatus(error.message || "Změna hesla se nepodařila.", "error");
     }
 }
 

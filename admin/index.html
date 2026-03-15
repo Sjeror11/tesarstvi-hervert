@@ -330,6 +330,29 @@
                     <button type="submit">Přidat fotku</button>
                 </form>
 
+                <section class="panel">
+                    <div class="panel-inner stack">
+                        <div>
+                            <h3>Změna hesla</h3>
+                            <p>Změní heslo pro přihlášení do této administrace.</p>
+                        </div>
+
+                        <form id="password-form" class="stack">
+                            <div class="field">
+                                <label for="current-password">Současné heslo</label>
+                                <input id="current-password" name="currentPassword" type="password" autocomplete="current-password" required>
+                            </div>
+
+                            <div class="field">
+                                <label for="new-password">Nové heslo</label>
+                                <input id="new-password" name="newPassword" type="password" autocomplete="new-password" minlength="8" required>
+                            </div>
+
+                            <button type="submit">Uložit nové heslo</button>
+                        </form>
+                    </div>
+                </section>
+
                 <div id="admin-status" class="status success hidden"></div>
 
                 <div class="gallery-meta">

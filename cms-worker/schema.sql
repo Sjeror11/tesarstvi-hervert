@@ -7,5 +7,11 @@ CREATE TABLE IF NOT EXISTS gallery_photos (
     created_at INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS admin_credentials (
+    username TEXT PRIMARY KEY,
+    password_hash TEXT NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS idx_gallery_photos_service_slug_created_at
 ON gallery_photos(service_slug, created_at DESC);

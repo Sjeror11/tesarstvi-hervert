@@ -39,6 +39,12 @@ export default {
                 });
             }
 
+            if (url.pathname === "/api/admin/change-password" && request.method === "POST") {
+                return requireAuth(request, env, function (session) {
+                    return handleChangePassword(request, env, session);
+                });
+            }
+
             if (url.pathname === "/api/admin/photos/upload" && request.method === "POST") {
                 return requireAuth(request, env, function () {
                     return handleUpload(request, env);
@@ -102,11 +108,13 @@ async function handleLogin(request, env) {
         return jsonResponse(request, env, 400, { error: "Vyplň jméno i heslo." });
     }
 
-    if (username !== env.ADMIN_USERNAME) {
+    const credential = await getAdminCredential(env);
+
+    if (!credential || username !== credential.username) {
         return jsonResponse(request, env, 401, { error: "Neplatné přihlašovací údaje." });
     }
 
-    const validPassword = await verifyPassword(password, env.ADMIN_PASSWORD_HASH);
+    const validPassword = await verifyPassword(password, credential.passwordHash);
 
     if (!validPassword) {
         return jsonResponse(request, env, 401, { error: "Neplatné přihlašovací údaje." });
@@ -155,6 +163,42 @@ async function handleAdminPhotos(request, env) {
     return jsonResponse(request, env, 200, {
         photosByService: mapRowsByService(env, rows.results || [])
     });
+}
+
+async function handleChangePassword(request, env, session) {
+    const payload = await request.json();
+    const currentPassword = String(payload.currentPassword || "");
+    const newPassword = String(payload.newPassword || "");
+
+    if (!currentPassword || !newPassword) {
+        return jsonResponse(request, env, 400, { error: "Vyplň současné i nové heslo." });
+    }
+
+    if (newPassword.length < 8) {
+        return jsonResponse(request, env, 400, { error: "Nové heslo musí mít alespoň 8 znaků." });
+    }
+
+    const credential = await getAdminCredential(env);
+
+    if (!credential || credential.username !== session.username) {
+        return jsonResponse(request, env, 401, { error: "Neplatný uživatel." });
+    }
+
+    const validPassword = await verifyPassword(currentPassword, credential.passwordHash);
+
+    if (!validPassword) {
+        return jsonResponse(request, env, 401, { error: "Současné heslo nesouhlasí." });
+    }
+
+    const newHash = await hashPassword(newPassword);
+
+    await env.DB.prepare(
+        "INSERT INTO admin_credentials (username, password_hash, updated_at) VALUES (?, ?, ?) ON CONFLICT(username) DO UPDATE SET password_hash = excluded.password_hash, updated_at = excluded.updated_at"
+    )
+        .bind(session.username, newHash, Date.now())
+        .run();
+
+    return jsonResponse(request, env, 200, { ok: true });
 }
 
 async function handleUpload(request, env) {
@@ -248,6 +292,26 @@ async function requireAuth(request, env, handler) {
     }
 
     return handler(session);
+}
+
+async function getAdminCredential(env) {
+    const row = await env.DB.prepare(
+        "SELECT username, password_hash FROM admin_credentials WHERE username = ? LIMIT 1"
+    )
+        .bind(env.ADMIN_USERNAME)
+        .first();
+
+    if (row && row.username && row.password_hash) {
+        return {
+            username: row.username,
+            passwordHash: row.password_hash
+        };
+    }
+
+    return {
+        username: env.ADMIN_USERNAME,
+        passwordHash: env.ADMIN_PASSWORD_HASH
+    };
 }
 
 function mapRowsByService(env, rows) {
@@ -424,6 +488,38 @@ async function verifyPassword(password, encodedHash) {
     return timingSafeEqual(actualHash, expectedHash);
 }
 
+async function hashPassword(password) {
+    const iterations = 100000;
+    const saltBytes = new Uint8Array(16);
+    crypto.getRandomValues(saltBytes);
+    const salt = Array.from(saltBytes)
+        .map(function (byte) {
+            return byte.toString(16).padStart(2, "0");
+        })
+        .join("");
+
+    const keyMaterial = await crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(password),
+        "PBKDF2",
+        false,
+        ["deriveBits"]
+    );
+
+    const derivedBits = await crypto.subtle.deriveBits(
+        {
+            name: "PBKDF2",
+            salt: new TextEncoder().encode(salt),
+            iterations,
+            hash: "SHA-256"
+        },
+        keyMaterial,
+        256
+    );
+
+    return "pbkdf2_sha256$" + iterations + "$" + salt + "$" + arrayBufferToBase64(derivedBits);
+}
+
 function parseCookies(cookieHeader) {
     return cookieHeader
         .split(";")
@@ -476,7 +572,7 @@ function buildCorsHeaders(request, env) {
     }
 
     headers.set("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
-    headers.set("Access-Control-Allow-Headers", "Content-Type");
+    headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
     headers.set("Vary", "Origin");
     return headers;
 }
