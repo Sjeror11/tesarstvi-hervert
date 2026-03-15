@@ -5,9 +5,10 @@ Cloudflare Worker pro vlastní klientský login a správu galerií.
 ## Co řeší
 
 - login přes vlastní jméno a heslo
-- session cookie pro administraci
+- bearer token a fallback cookie pro administraci
 - upload fotek do R2
 - mazání fotek z R2
+- změnu hesla přes administraci
 - ukládání metadat do D1
 - veřejné čtení galerií pro web
 
@@ -37,5 +38,5 @@ Pak:
 
 ## Veřejná URL
 
-- API a média: `https://cms.tesarstvihervert.cz`
-- healthcheck: `https://cms.tesarstvihervert.cz/health`
+- API a média: `https://tesarstvi-hervert-cms.sjeror11.workers.dev`
+- healthcheck: `https://tesarstvi-hervert-cms.sjeror11.workers.dev/health`

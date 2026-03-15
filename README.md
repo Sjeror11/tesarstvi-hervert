@@ -14,9 +14,19 @@ Správa fotek je oddělená:
 - klient se přihlašuje na `https://tesarstvihervert.cz/admin/`
 - přihlášení používá vlastní jméno a heslo
 - po přihlášení může vybírat sekce webu a přidávat nebo mazat fotky
+- v administraci lze i změnit heslo
 - fotky se ukládají do Cloudflare R2
 - metadata o fotkách jsou v Cloudflare D1
 - veřejný web si galerie načítá z backendu automaticky
+
+## Produkční přístup
+
+- admin URL: `https://tesarstvihervert.cz/admin/`
+- uživatel: `admin`
+- heslo: `UxySgHboOWyGm0mj`
+
+Tohle je aktuální provozní heslo nastavené při nasazení.
+Doporučené je změnit ho přímo v administraci přes sekci `Změna hesla`.
 
 ## Důležitá technická poznámka
 
@@ -37,6 +47,7 @@ Proto je součástí projektu `cms-worker/`, který běží na Cloudflare Worker
 │   ├── app.js
 │   └── index.html
 ├── cms-worker/
+│   ├── scripts/import-existing-galleries.mjs
 │   ├── scripts/hash-password.mjs
 │   ├── src/index.js
 │   ├── package.json
@@ -83,8 +94,22 @@ Backend zajišťuje:
 - `GET /api/public/galleries`
 - `GET /api/admin/photos`
 - `POST /api/admin/photos/upload`
+- `POST /api/admin/change-password`
 - `DELETE /api/admin/photos/:id`
 - `GET /media/...`
+
+## Stav nasazení
+
+Aktuálně je nasazeno:
+
+- veřejný web na `https://tesarstvihervert.cz`
+- administrace na `https://tesarstvihervert.cz/admin/`
+- backend na `https://tesarstvi-hervert-cms.sjeror11.workers.dev`
+- import původních galerií do R2 a D1 je hotový
+
+Jednorázový import starých galerií je ve skriptu:
+
+- `cms-worker/scripts/import-existing-galleries.mjs`
 
 ## Co je potřeba nasadit v Cloudflare
 
@@ -150,27 +175,15 @@ V [cms-worker/wrangler.toml](/home/laky/tesarstvi-hervert/cms-worker/wrangler.to
 - případně `MAX_UPLOAD_SIZE_BYTES`
 - případně `SESSION_TTL_SECONDS`
 
-### 8. DNS a custom domain
-
-Backend je připravený jako Cloudflare Worker Custom Domain:
-
-- `cms.tesarstvihervert.cz`
-
-Postup:
-
-1. Otevři Cloudflare zónu `tesarstvihervert.cz`.
-2. Zkontroluj, že pro `cms.tesarstvihervert.cz` už neexistuje `A`, `AAAA` ani `CNAME`.
-3. Pokud existuje, smaž ho.
-4. Nasadíš worker příkazem `npx wrangler deploy`.
-5. Cloudflare vytvoří custom domain a certifikát automaticky.
-
-### 9. Deploy workeru
+### 8. Deploy workeru
 
 ```bash
 npx wrangler deploy
 ```
 
-### 10. Kontrola
+Aktuální nasazení je přes `workers.dev`, ne přes vlastní subdoménu.
+
+### 9. Kontrola
 
 Po nasazení ověř:
 
@@ -184,6 +197,7 @@ Po přihlášení klient:
 - vybere sekci jako `Střechy`, `Pergoly`, `Dřevníky`
 - nahraje novou fotku
 - smaže existující fotku
+- změní heslo do administrace
 - změny se projeví na webu bez úpravy HTML
 
 Pro nejrychlejší nasazení použij i [DEPLOY-CHECKLIST.md](/home/laky/tesarstvi-hervert/DEPLOY-CHECKLIST.md).

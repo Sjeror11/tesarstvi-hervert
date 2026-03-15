@@ -57,29 +57,23 @@ Do `ADMIN_PASSWORD_HASH` vlož hash z předchozího kroku.
 
 Do `SESSION_SECRET` vlož dlouhý náhodný řetězec, například 32+ znaků.
 
-## 7. Zkontroluj doménu
-
-V Cloudflare DNS:
-
-1. Otevři zónu `tesarstvihervert.cz`.
-2. Najdi záznam `cms.tesarstvihervert.cz`.
-3. Pokud existuje `A`, `AAAA` nebo `CNAME`, smaž ho.
-
-To je nutné, protože Worker používá `custom_domain = true`.
-
-## 8. Nasazení backendu
+## 7. Nasazení backendu
 
 ```bash
 npx wrangler deploy
 ```
 
-## 9. Ověření backendu
+Aktuální nasazení používá `workers.dev` URL:
+
+- `https://tesarstvi-hervert-cms.sjeror11.workers.dev`
+
+## 8. Ověření backendu
 
 Musí fungovat:
 
-- `https://cms.tesarstvihervert.cz/health`
+- `https://tesarstvi-hervert-cms.sjeror11.workers.dev/health`
 
-## 10. Ověření adminu
+## 9. Ověření adminu
 
 Otevři:
 
@@ -87,7 +81,7 @@ Otevři:
 
 Přihlaš se jménem z [cms-worker/wrangler.toml](/home/laky/tesarstvi-hervert/cms-worker/wrangler.toml#L6) v `ADMIN_USERNAME` a heslem, které jsi hashoval.
 
-## 11. Ověření na webu
+## 10. Ověření na webu
 
 Po přihlášení:
 
@@ -103,5 +97,4 @@ Zkontroluj:
 
 - `database_id` v [cms-worker/wrangler.toml](/home/laky/tesarstvi-hervert/cms-worker/wrangler.toml#L20)
 - že secrets `ADMIN_PASSWORD_HASH` a `SESSION_SECRET` jsou opravdu nastavené
-- že neexistuje starý DNS záznam pro `cms.tesarstvihervert.cz`
-- že `https://cms.tesarstvihervert.cz/health` vrací odpověď
+- že `https://tesarstvi-hervert-cms.sjeror11.workers.dev/health` vrací odpověď
