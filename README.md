@@ -84,7 +84,8 @@ Pozor:
 
 - veřejný web: `https://tesarstvihervert.cz`
 - admin stránka: `https://tesarstvihervert.cz/admin/`
-- backend API + obrázky: `https://tesarstvi-hervert-cms.sjeror11.workers.dev`
+- backend API + obrázky: `https://tesarstvi-hervert-cms 0000000000000000000000000
+- `
 
 Backend zajišťuje:
 
