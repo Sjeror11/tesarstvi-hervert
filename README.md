@@ -22,8 +22,8 @@ Správa fotek je oddělená:
 ## Produkční přístup
 
 - admin URL: `https://tesarstvihervert.cz/admin/`
-- uživatel: `admin`
-- heslo: `UxySgHboOWyGm0mj`
+- uživatel: `00000`
+- heslo: `000000`
 
 Tohle je aktuální provozní heslo nastavené při nasazení.
 Doporučené je změnit ho přímo v administraci přes sekci `Změna hesla`.
