@@ -1,240 +1,928 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="cs" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tesařství Hervert - Kvalitní střechy a dřevěné konstrukce</title>
-    <meta name="description" content="Tesařství Hervert - Profesionální tesařské práce, střechy, pergoly, dřevníky a masivní nábytek z kvalitního dřeva.">
+    <title>Tesařství Hervert | Kvalitní řemeslo z masivního dřeva</title>
+    <meta name="title" content="Tesařství Hervert | Kvalitní řemeslo z masivního dřeva">
+    <meta name="description" content="Tesařství Hervert nabízí profesionální výrobu krovů, střech, masivních postelí a zahradních pergol. Poctivá tesařská práce s důrazem na detail a kvalitu materiálu.">
+    <meta name="keywords" content="tesařství, výroba krovů, střechy na klíč, masivní nábytek, pergoly, dřevěné schody, tesař Terezín, práce se dřevem">
+    <meta name="author" content="Dominik Kulich">
+    <meta name="robots" content="index, follow">
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/nivo-slider.css">
-    <link rel="stylesheet" href="css/colorbox.css">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.tesarstvihervert.cz/"> <meta property="og:title" content="Tesařství Hervert | Kvalitní řemeslo z masivního dřeva">
+    <meta property="og:description" content="Výroba krovů, pergol a nábytku z masivu. Podívejte se na naše portfolio realizací.">
+    <meta property="og:image" content="img/android-chrome-512x512.png"> <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.tesarstvihervert.cz/">
+    <meta property="twitter:title" content="Tesařství Hervert | Kvalitní řemeslo">
+    <meta property="twitter:description" content="Specialisté na krovy, pergoly a masivní nábytek.">
+    <meta property="twitter:image" content="img/android-chrome-512x512.png">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Konfigurace s původními barvami a fonty -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wood: {
+                            50: '#fcf8f3',
+                            100: '#f8efe3',
+                            200: '#efdcc0',
+                            300: '#e3c196',
+                            400: '#d59e65',
+                            500: '#c8803e',
+                            600: '#b86732',
+                            700: '#994f2b',
+                            800: '#7d4126', // Hlavní hnědá
+                            900: '#643621',
+                            950: '#3d1e11', // Tmavší odstín pro prémiové sekce
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(100, 54, 33, 0.15)',
+                        'glow': '0 0 20px rgba(125, 65, 38, 0.3)',
+                    },
+                    keyframes: {
+                        heroScale: {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.1)' }
+                        },
+                        galleryFadeIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.95)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' }
+                        }
+                    },
+                    animation: {
+                        'hero-zoom': 'heroScale 20s ease-in-out infinite alternate',
+                        'gallery-show': 'galleryFadeIn 0.4s ease-out forwards',
+                        'floating': 'float 6s ease-in-out infinite'
+                    }
+                }
+            }
+        }
+    </script>
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom CSS pro animace a detaily -->
     <style>
-        .photo-gallery {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 9999;
-            overflow-y: auto;
-            cursor: pointer;
-            padding: 20px;
+        body {
+            background-color: #fcf8f3; /* wood-50 */
+            color: #1f2937; /* gray-800 */
+        }
+
+        /* Třídy pro scroll animace (odkrytí) */
+        .reveal {
             opacity: 0;
-            animation: galleryFadeIn 0.3s ease-out forwards;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        @keyframes galleryFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
 
-        .photo-gallery.closing {
-            animation: galleryFadeOut 0.2s ease-in forwards;
-        }
-
-        @keyframes galleryFadeOut {
-            from {
-                opacity: 1;
-                transform: scale(1);
-            }
-            to {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-        }
-
-        .gallery-header {
-            position: sticky;
-            top: 0;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-radius: 8px;
-        }
-
-        .gallery-header h3 {
-            color: white;
-            margin: 0;
-            font-size: 24px;
-        }
-
-        .gallery-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            cursor: default;
-        }
-
-        .gallery-item {
-            border-radius: 8px;
+        /* Obrázky v portfoliu */
+        .img-hover-zoom {
             overflow: hidden;
-            transition: transform 0.3s;
+        }
+        .img-hover-zoom img {
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .img-hover-zoom img {
+            transform: scale(1.08);
         }
 
-        .gallery-item:hover {
-            transform: scale(1.05);
+        /* Custom link underline */
+        .link-underline {
+            position: relative;
         }
-
-        .gallery-item img {
+        .link-underline::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #7d4126;
+            transition: width 0.3s ease;
+        }
+        .link-underline:hover::after {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
         }
 
-        .gallery-trigger {
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        /* Skrytí scrollbaru pro mobilní menu */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-
-        .gallery-trigger:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
-        }
-
-        .gallery-trigger:hover .service-image img {
-            transform: scale(1.05);
-            transition: transform 0.3s ease;
-        }
-
-        .content-loading {
-            text-align: center;
-            padding: 40px 20px;
-            color: #8b4513;
-        }
-
-        .content-error {
-            max-width: 720px;
-            margin: 40px auto;
-            padding: 24px;
-            border-radius: 12px;
-            background: #fff4ea;
-            color: #5f2f0b;
-            box-shadow: 0 12px 30px rgba(95, 47, 11, 0.12);
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="js/jquery.nivo.slider.js"></script>
-    <script src="js/jquery.colorbox-min.js"></script>
 </head>
-<body>
-    <header id="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <h1><a id="brand-name" href="index.html">Tesařství Hervert</a></h1>
-                    <p id="brand-tagline">Kvalitní řemeslo z masivního dřeva</p>
+<body class="font-sans antialiased selection:bg-wood-300 selection:text-wood-900">
+
+    <!-- Navbar (Klasický a čistý) -->
+    <header id="header" class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all duration-300 py-5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2 group">
+                    <i data-lucide="hammer" class="text-wood-800 w-8 h-8 transition-transform duration-300 group-hover:-rotate-12"></i>
+                    <span class="font-heading font-bold text-2xl tracking-tight text-wood-900">
+                        Tesařství <span class="text-wood-600">Hervert</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#domu" class="text-gray-600 font-medium hover:text-wood-800 transition-colors link-underline">Domů</a>
+                    <a href="#o-nas" class="text-gray-600 font-medium hover:text-wood-800 transition-colors link-underline">O nás</a>
+                    <a href="#sluzby" class="text-gray-600 font-medium hover:text-wood-800 transition-colors link-underline">Služby</a>
+                    <a href="#portfolio" class="text-gray-600 font-medium hover:text-wood-800 transition-colors link-underline">Portfolio</a>
+                    
+                </nav>
+
+                <!-- Tlačítko (Desktop) -->
+                <div class="hidden md:block">
+                    <a href="#kontakt" class="inline-flex bg-wood-800 text-white rounded-md px-6 py-2.5 font-medium hover:bg-wood-900 transition-colors duration-300 shadow-sm hover:shadow-md">
+                        Nezávazná poptávka
+                    </a>
                 </div>
-                <div class="contact-info">
-                    <div class="contact-item phone">
-                        <span class="contact-icon">📞</span>
-                        <div class="contact-details">
-                            <span class="contact-label">Tel:</span>
-                            <strong id="header-phone-text" class="contact-value">+420 773 602 042</strong>
-                        </div>
-                        <a id="header-phone-link" href="tel:+420773602042" class="contact-call-button">Zavolat</a>
+
+                <!-- Mobile Menu Tlačítko -->
+                <button id="mobile-menu-btn" class="md:hidden text-wood-900 focus:outline-none p-2">
+                    <div class="space-y-1.5 flex flex-col items-end">
+                        <span class="w-7 h-[2px] bg-current block transition-transform duration-300"></span>
+                        <span class="w-5 h-[2px] bg-current block transition-transform duration-300"></span>
+                        <span class="w-7 h-[2px] bg-current block transition-transform duration-300"></span>
                     </div>
-                    <div class="contact-item email">
-                        <span class="contact-icon">✉️</span>
-                        <strong class="contact-value"><a id="header-email-link" href="mailto:hery.hervert@seznam.cz">hery.hervert@seznam.cz</a></strong>
-                    </div>
-                </div>
+                </button>
             </div>
         </div>
     </header>
 
-    <section id="slider-section">
-        <div class="slider-wrapper">
-            <div id="slider" class="nivoSlider">
-                <div class="content-loading">Načítám prezentaci realizací…</div>
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-wood-50 z-40 flex flex-col justify-center px-8 opacity-0 pointer-events-none transition-opacity duration-300">
+        <nav class="flex flex-col gap-6 text-2xl font-heading font-bold text-center">
+            <a href="#domu" class="mobile-link text-wood-900 hover:text-wood-600">Domů</a>
+                <a href="#o-nas" class="mobile-link text-wood-900 hover:text-wood-600">O nás</a>
+            <a href="#sluzby" class="mobile-link text-wood-900 hover:text-wood-600">Služby</a>
+            <a href="#portfolio" class="mobile-link text-wood-900 hover:text-wood-600">Portfolio</a>
+        
+            <a href="#kontakt" class="mobile-link text-wood-800 mt-4 text-xl bg-wood-100 py-4 rounded-xl mx-8">Kontaktujte nás</a>
+        </nav>
+    </div>
+
+    <!-- Klasická Centrovaná Hero Sekce -->
+    <section id="domu" class="relative min-h-[90svh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-wood-950">
+        <!-- Pozadí přes celou šířku s tmavým překryvem -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gray-900/60 mix-blend-multiply z-10"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-wood-950/80 via-transparent to-transparent z-10"></div>
+            <img src="img/hero.webp" alt="pozadi" class="w-full h-full object-cover animate-hero-zoom opacity-90" id="hero-img">
+        </div>
+
+        <!-- Obsah zarovnaný na střed -->
+        <div class="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center text-center mt-12 lg:mt-0">
+            <!-- Drobný štítek pro budování důvěry -->
+            <div class="reveal inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 text-sm font-medium mb-6 backdrop-blur-sm">
+                <span class="w-2 h-2 rounded-full bg-wood-400"></span>
+                +420 773 602 042
+
+            </div>
+            
+            <!-- Hlavní nadpis -->
+            <h1 class="reveal delay-100 font-heading text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6 tracking-tight">
+                Kvalitní řemeslo <br> z masivního dřeva
+            </h1>
+            
+            <!-- Podnadpis -->
+            <p class="reveal delay-200 text-lg sm:text-xl text-white/80 mb-10 max-w-2xl font-light leading-relaxed">
+                Od drobných pergol až po masivní střešní konstrukce. Stavíme spolehlivě, přesně a s důrazem na každý detail, který zajistí dlouhou životnost vaší stavby.
+            </p>
+            
+            <!-- Standardní jasná tlačítka (Call to Action) -->
+            <div class="reveal delay-300 flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
+                <a href="#kontakt" class="inline-flex justify-center items-center px-8 py-4 bg-wood-700 text-white rounded-md text-base font-semibold tracking-wide hover:bg-wood-600 transition-colors duration-300 shadow-lg w-full sm:w-auto">
+                    Nezávazná poptávka
+                </a>
+                <a href="#portfolio" class="inline-flex justify-center items-center px-8 py-4 border border-white/30 text-white rounded-md text-base font-medium hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm w-full sm:w-auto">
+                    Prohlédnout realizace
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator 
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 reveal delay-300">
+            <div class="w-[1px] h-12 bg-white/20 relative overflow-hidden mt-2">
+                <div class="absolute top-0 left-0 w-full h-1/2 bg-wood-500 animate-[scrolldown_2s_ease-in-out_infinite]"></div>
+            </div>
+        </div> -->
+    </section>
+
+    <!-- About Section (Zmenšený obrázek pomocí max-w-md mx-auto) -->
+    <section id="o-nas" class="py-32 bg-white overflow-hidden relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+                <!-- Obrazová část (zmenšená šířka) -->
+                <div class="relative reveal max-w-md mx-auto w-full">
+                    <div class="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="img/postel1.jpg" alt="Postel z masivu" class="w-full h-full object-cover">
+                    </div>
+                    <!-- Plovoucí element -->
+                    <div class="absolute -bottom-8 -right-8 bg-wood-900 text-white p-8 rounded-2xl shadow-soft max-w-xs hidden sm:block animate-floating z-20">
+                        <div class="text-wood-400 mb-4">
+                            <i data-lucide="award" class="w-10 h-10"></i>
+                        </div>
+                        <h5 class="font-heading font-bold text-xl mb-2">Certifikovaná kvalita</h5>
+                        <p class="text-sm text-white/70">Používáme pouze léty prověřené postupy a prémiové materiály pro zaručení odolnosti.</p>
+                    </div>
+                </div>
+
+                <!-- Textová část -->
+                <div class="reveal delay-100">
+                    <h2 class="text-wood-600 font-semibold tracking-wide uppercase text-sm mb-3">Tesařství Hervert</h2>
+                    <h3 class="font-heading text-4xl sm:text-5xl font-bold text-gray-900 leading-tight mb-8">Dřevo je náš život. <br>Řemeslo naše vášeň.</h3>
+                    
+                    <div class="space-y-6 text-gray-600 text-lg font-light leading-relaxed mb-10">
+                        <p>
+                            Jsme rodinná firma s dlouholetou tradicí v tesařském řemesle. Specializujeme se na kvalitní práce z masivního dřeva, od střešních konstrukcí až po nábytek na míru.
+                        </p>
+                        <p>
+                            Naším cílem je spokojenost zákazníků a vytváření kvalitních výrobků, které vydrží generace. Používáme pouze ověřené materiály a tradiční řemeslné postupy kombinované s moderními technologiemi.
+                        </p>
+                    </div>
+                    
+                    <!-- Výhody (Checklist) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 border-t border-gray-200 pt-8">
+                        <div class="flex items-center gap-3">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-wood-100 flex items-center justify-center text-wood-700">
+                                <i data-lucide="check" class="w-5 h-5"></i>
+                            </div>
+                            <span class="text-gray-800 font-medium">Více než 12 let zkušeností</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-wood-100 flex items-center justify-center text-wood-700">
+                                <i data-lucide="check" class="w-5 h-5"></i>
+                            </div>
+                            <span class="text-gray-800 font-medium">Kvalitní materiály</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-wood-100 flex items-center justify-center text-wood-700">
+                                <i data-lucide="check" class="w-5 h-5"></i>
+                            </div>
+                            <span class="text-gray-800 font-medium">Individuální přístup</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-wood-100 flex items-center justify-center text-wood-700">
+                                <i data-lucide="check" class="w-5 h-5"></i>
+                            </div>
+                            <span class="text-gray-800 font-medium">Záruka na všechny práce</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <main id="main-content">
-        <div class="container">
-            <section id="intro" class="content-section">
-                <div class="section-header">
-                    <h2 id="intro-heading">Profesionální tesařské práce</h2>
-                    <p id="intro-text">Načítám obsah…</p>
-                </div>
-            </section>
+    <!-- Services Section -->
+    <section id="sluzby" class="py-32 bg-wood-50 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="flex flex-col items-center text-center gap-4 mb-20">
+            <div class="max-w-2xl reveal">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <span class="w-8 h-[2px] bg-wood-500"></span>
+                    <h2 class="text-wood-600 font-semibold tracking-[0.15em] uppercase text-sm">Co děláme</h2>
+                    <span class="w-8 h-[2px] bg-wood-500"></span> </div>
+                <h3 class="font-heading text-4xl sm:text-5xl font-bold text-wood-900 leading-tight">Naše služby a výrobky</h3>
+            </div>
+        </div>
 
-            <section id="services" class="content-section">
-                <h2>Naše služby</h2>
-                <div id="services-grid" class="services-grid">
-                    <div class="content-loading">Načítám služby…</div>
-                </div>
-            </section>
-
-            <section id="about" class="content-section">
-                <h2 id="about-heading">O naší firmě</h2>
-                <div class="about-content">
-                    <div class="about-text">
-                        <div id="about-paragraphs">
-                            <p>Načítám informace o firmě…</p>
-                        </div>
-                        <ul id="benefits-list" class="benefits"></ul>
+            <!-- Grid pro 5 služeb (První řádek 3, druhý řádek 2) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-10">
+                
+                <!-- Služba 1: Střechy & Krovy -->
+                <div class="lg:col-span-2 reveal relative bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_10px_40px_rgb(125,65,38,0.08)] transition-all duration-500 border border-gray-100/50 group overflow-hidden flex flex-col hover:-translate-y-1">
+                    <div class="h-64 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-wood-950/60 via-transparent to-transparent opacity-70 group-hover:opacity-30 transition-opacity duration-500 z-10"></div>
+                        <img src="img/krov.jpg" alt="Střechy a krovy" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow bg-white">
+                        <h4 class="font-heading font-bold text-2xl text-gray-900 mb-4 group-hover:text-wood-700 transition-colors">Střechy & Krovy</h4>
+                        <p class="text-gray-500 font-light leading-relaxed flex-grow">
+                            Realizace střešních konstrukcí, opravy krovů, zateplovací systémy. Pracujeme s tradičními i moderními materiály.
+                        </p>
                     </div>
                 </div>
-            </section>
-        </div>
-    </main>
 
-    <footer id="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Kontakt</h3>
-                    <p id="footer-contact"></p>
+                <!-- Služba 2: Pergoly -->
+                <div class="lg:col-span-2 reveal delay-100 relative bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_10px_40px_rgb(125,65,38,0.08)] transition-all duration-500 border border-gray-100/50 group overflow-hidden flex flex-col hover:-translate-y-1">
+                    <div class="h-64 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-wood-950/60 via-transparent to-transparent opacity-70 group-hover:opacity-30 transition-opacity duration-500 z-10"></div>
+                        <img src="img/pergola.jpg" alt="Pergoly" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow bg-white">
+                        <h4 class="font-heading font-bold text-2xl text-gray-900 mb-4 group-hover:text-wood-700 transition-colors">Pergoly</h4>
+                        <p class="text-gray-500 font-light leading-relaxed flex-grow">
+                            Designové pergoly pro zahrady a terasy. Kombinujeme funkcionalitu s estetikou pro vytvoření příjemných venkovních prostorů.
+                        </p>
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <h3>Naše služby</h3>
-                    <p id="footer-services"></p>
+
+                <!-- Služba 3: Dřevníky -->
+                <div class="lg:col-span-2 reveal delay-200 relative bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_10px_40px_rgb(125,65,38,0.08)] transition-all duration-500 border border-gray-100/50 group overflow-hidden flex flex-col hover:-translate-y-1">
+                    <div class="h-64 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-wood-950/60 via-transparent to-transparent opacity-70 group-hover:opacity-30 transition-opacity duration-500 z-10"></div>
+                        <img src="img/drevnik.jpg" alt="Dřevníky" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow bg-white">
+                        <h4 class="font-heading font-bold text-2xl text-gray-900 mb-4 group-hover:text-wood-700 transition-colors">Dřevníky</h4>
+                        <p class="text-gray-500 font-light leading-relaxed flex-grow">
+                            Praktické dřevníky na míru podle vašich potřeb. Od jednoduchých konstrukcí až po designové prvky zahrady.
+                        </p>
+                    </div>
                 </div>
-                <div id="footer-newsletter-section" class="footer-section">
-                    <h3 id="newsletter-heading">Newsletter</h3>
-                    <p id="newsletter-text"></p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Váš email">
-                        <button type="submit">Odeslat</button>
+
+                <!-- Služba 4: Masivní postele -->
+                <div class="lg:col-span-2 lg:col-start-2 reveal relative bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_10px_40px_rgb(125,65,38,0.08)] transition-all duration-500 border border-gray-100/50 group overflow-hidden flex flex-col hover:-translate-y-1">
+                    <div class="h-64 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-wood-950/60 via-transparent to-transparent opacity-70 group-hover:opacity-30 transition-opacity duration-500 z-10"></div>
+                        <img src="img/postel2.jpg" alt="Masivní postele" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow bg-white">
+                        <h4 class="font-heading font-bold text-2xl text-gray-900 mb-4 group-hover:text-wood-700 transition-colors">Masivní postele</h4>
+                        <p class="text-gray-500 font-light leading-relaxed flex-grow">
+                            Luxusní postele z kvalitního masivního dřeva. Každý kus je unikátní a vyrobený s láskou k detailu.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Služba 5: Doplňky z masívu -->
+                <div class="lg:col-span-2 reveal delay-100 relative bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_10px_40px_rgb(125,65,38,0.08)] transition-all duration-500 border border-gray-100/50 group overflow-hidden flex flex-col hover:-translate-y-1">
+                    <div class="h-64 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-wood-950/60 via-transparent to-transparent opacity-70 group-hover:opacity-30 transition-opacity duration-500 z-10"></div>
+                        <img src="img/schody.jpg" alt="Doplňky z masívu" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    </div>
+                    <div class="p-8 flex flex-col flex-grow bg-white">
+                        <h4 class="font-heading font-bold text-2xl text-gray-900 mb-4 group-hover:text-wood-700 transition-colors">Doplňky z masívu</h4>
+                        <p class="text-gray-500 font-light leading-relaxed flex-grow">
+                            Různé doplňky a prvky z masivního dřeva - police, stoly, lavice a další prvky pro interiér i exteriér.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Postup spolupráce (Proces) -->
+    <section id="proces" class="py-32 bg-white relative z-10 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-24 reveal">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <span class="w-8 h-[2px] bg-wood-500"></span>
+                    <h2 class="text-wood-600 font-semibold tracking-[0.15em] uppercase text-sm">Jak pracujeme</h2>
+                    <span class="w-8 h-[2px] bg-wood-500"></span>
+                </div>
+                <h3 class="font-heading text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">Od nápadu k realizaci</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+                <!-- Spojovací linka (pouze desktop) -->
+                <div class="hidden md:block absolute top-12 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-wood-100 via-wood-300 to-wood-100 z-0"></div>
+
+                <!-- Krok 1 -->
+                <div class="reveal relative z-10 flex flex-col items-center text-center group">
+                    <div class="w-24 h-24 bg-white rounded-full border-4 border-wood-50 shadow-xl flex items-center justify-center mb-8 relative group-hover:-translate-y-2 transition-transform duration-500 cursor-default">
+                        <div class="absolute inset-0 rounded-full border-2 border-wood-400 scale-110 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500"></div>
+                        <span class="font-heading font-bold text-3xl text-wood-800">01</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-2xl text-gray-900 mb-4">Konzultace</h4>
+                    <p class="text-gray-500 font-light leading-relaxed px-4">
+                        Probereme vaši představu, posoudíme možnosti přímo na místě a doporučíme nejvhodnější materiály i technické řešení.
+                    </p>
+                </div>
+
+                <!-- Krok 2 -->
+                <div class="reveal delay-100 relative z-10 flex flex-col items-center text-center group">
+                    <div class="w-24 h-24 bg-white rounded-full border-4 border-wood-50 shadow-xl flex items-center justify-center mb-8 relative group-hover:-translate-y-2 transition-transform duration-500 cursor-default">
+                        <div class="absolute inset-0 rounded-full border-2 border-wood-400 scale-110 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500"></div>
+                        <span class="font-heading font-bold text-3xl text-wood-800">02</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-2xl text-gray-900 mb-4">Cenová nabídka</h4>
+                    <p class="text-gray-500 font-light leading-relaxed px-4">
+                        Zpracujeme detailní a transparentní rozpočet včetně jasného harmonogramu. U nás vždy přesně víte, za co platíte.
+                    </p>
+                </div>
+
+                <!-- Krok 3 -->
+                <div class="reveal delay-200 relative z-10 flex flex-col items-center text-center group">
+                    <div class="w-24 h-24 bg-white rounded-full border-4 border-wood-50 shadow-xl flex items-center justify-center mb-8 relative group-hover:-translate-y-2 transition-transform duration-500 cursor-default">
+                        <div class="absolute inset-0 rounded-full border-2 border-wood-400 scale-110 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500"></div>
+                        <span class="font-heading font-bold text-3xl text-wood-800">03</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-2xl text-gray-900 mb-4">Realizace</h4>
+                    <p class="text-gray-500 font-light leading-relaxed px-4">
+                        Samotná stavba probíhá s maximální precizností a ohledem na okolí. Předáme vám hotové, bezpečné a perfektně čisté dílo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ <section id="portfolio" class="py-32 bg-wood-950 text-white min-h-[800px]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+            <h2 class="text-wood-400 font-semibold tracking-wide uppercase text-sm mb-3">Naše vizitka</h2>
+            <h3 class="font-heading text-4xl sm:text-5xl font-bold leading-tight">Portfolio</h3>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-3 mb-12 reveal delay-100">
+            <button class="filter-btn bg-wood-600 text-white px-6 py-2 rounded-full text-sm font-medium transition-all duration-300" data-filter="all">Vše</button>
+            <button class="filter-btn bg-wood-900 border border-wood-800 text-wood-300 hover:bg-wood-800 hover:text-white px-6 py-2 rounded-full text-sm font-medium transition-all duration-300" data-filter="strechy">Střechy a krovy</button>
+            <button class="filter-btn bg-wood-900 border border-wood-800 text-wood-300 hover:bg-wood-800 hover:text-white px-6 py-2 rounded-full text-sm font-medium transition-all duration-300" data-filter="pergoly">Pergoly</button>
+            <button class="filter-btn bg-wood-900 border border-wood-800 text-wood-300 hover:bg-wood-800 hover:text-white px-6 py-2 rounded-full text-sm font-medium transition-all duration-300" data-filter="nabytek">Nábytek a doplňky</button>
+            <button class="filter-btn bg-wood-900 border border-wood-800 text-wood-300 hover:bg-wood-800 hover:text-white px-6 py-2 rounded-full text-sm font-medium transition-all duration-300" data-filter="ostatni">Ostatní</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 reveal delay-200" id="gallery-grid">
+            
+            <div class="gallery-item group block cursor-pointer" data-category="strechy" onclick="openLightbox('img/strecha.jpg', 'Tesařské konstrukce střech')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/strecha.jpg" alt="Střecha" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Střechy a krovy</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Realizace střechy</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item group block cursor-pointer" data-category="strechy" onclick="openLightbox('img/strecha2.jpg', 'Rekonstrukce střechy')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/strecha2.jpg" alt="Střecha 2" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Střechy a krovy</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Pokládka a krov</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item group block cursor-pointer" data-category="strechy" onclick="openLightbox('img/krov.jpg', 'Detail krovu')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/krov.jpg" alt="Krov" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Střechy a krovy</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Tradiční tesařské spoje</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item group block cursor-pointer" data-category="pergoly" onclick="openLightbox('img/pergola.jpg', 'Zahradní pergola')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/pergola.jpg" alt="Pergola" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Pergoly</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Masivní pergola</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item group block cursor-pointer" data-category="pergoly" onclick="openLightbox('img/pergola2.jpg', 'Moderní pergola')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/pergola2.jpg" alt="Pergola 2" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Pergoly</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Zastřešené posezení</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item group block cursor-pointer" data-category="pergoly" onclick="openLightbox('img/pergola3.jpg', 'Konstrukce pergoly')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/pergola3.jpg" alt="Pergola 3" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Pergoly</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Detail konstrukce</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item group block cursor-pointer" data-category="nabytek" onclick="openLightbox('img/posteltynec.jpg', 'Postel Týnec')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/posteltynec.jpg" alt="Postel Týnec" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Nábytek a doplňky</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Postel Týnec z masivu</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item group block cursor-pointer" data-category="nabytek" onclick="openLightbox('img/postel1.jpg', 'Postel z masivu')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/postel1.jpg" alt="Postel 1" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Nábytek a doplňky</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Designová postel</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item group block cursor-pointer" data-category="nabytek" onclick="openLightbox('img/nabytek.jpg', 'Nábytek')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/nabytek.jpg" alt="Nabytek" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Nábytek a doplňky</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Masiv</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item group block cursor-pointer" data-category="nabytek" onclick="openLightbox('img/police1.jpg', 'Nástěnné police')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/police1.jpg" alt="Police 1" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Nábytek a doplňky</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Police z masivu</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item group block cursor-pointer" data-category="nabytek" onclick="openLightbox('img/police2.jpg', 'Sada polic')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/police2.jpg" alt="Police 2" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Nábytek a doplňky</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Interiérové doplňky</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item group block cursor-pointer" data-category="ostatni" onclick="openLightbox('img/schody.jpg', 'Dřevěné schody')">
+                <div class="relative rounded-2xl overflow-hidden img-hover-zoom aspect-[4/3] bg-wood-900">
+                    <img src="img/schody.jpg" alt="Schody" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                    <div class="absolute inset-0 bg-gradient-to-t from-wood-950 via-wood-950/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-wood-400 text-sm font-medium mb-2 block">Ostatní</span>
+                        <h4 class="font-heading font-bold text-2xl text-white mb-0">Interiérové schodiště</h4>
+                    </div>
+                </div>
+            </div>
+
+          
+
+         
+
+        </div>
+        
+        <div id="no-results" class="hidden text-center py-12">
+            <p class="text-wood-400 text-lg">V této kategorii připravujeme nové ukázky.</p>
+        </div>
+    </div>
+</section>
+
+    <!-- Kontakt sekce -->
+    <section id="kontakt" class="py-32 bg-wood-50 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="bg-wood-900 rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row reveal border border-wood-800">
+                
+                <!-- Info Panel -->
+                <div class="lg:w-2/5 p-12 lg:p-16 text-white flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-wood-400 font-semibold tracking-wide uppercase text-sm mb-3">Pojďme se domluvit</h2>
+                        <h3 class="font-heading font-bold text-4xl mb-8">Máte projekt? Napište nám.</h3>
+                        <p class="text-white/70 font-light leading-relaxed mb-12">
+                            Rádi pro vás zpracujeme nezávaznou cenovou nabídku nebo poradíme s technickým řešením.
+                        </p>
+
+                        <div class="space-y-8">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-wood-800 p-3 rounded-lg text-wood-300">
+                                    <i data-lucide="map-pin" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-white text-lg">Sídlo a IČO</h5>
+                                    <p class="text-white/60 mt-1 font-light">Žitenice <br>21706387</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="bg-wood-800 p-3 rounded-lg text-wood-300">
+                                    <i data-lucide="phone" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-white text-lg">Telefon</h5>
+                                    <p class="text-white/60 mt-1 font-light"><a href="tel:+420773602042" class="hover:text-wood-300 transition-colors">+420 773 602 042</a></p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="bg-wood-800 p-3 rounded-lg text-wood-300">
+                                    <i data-lucide="mail" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-white text-lg">E-mail</h5>
+                                    <p class="text-white/60 mt-1 font-light"><a href="mailto:info@tesarstvi-hervert.cz" class="hover:text-wood-300 transition-colors">hery.hervert@seznam.cz</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Panel -->
+                <div class="lg:w-3/5 p-12 lg:p-16 bg-white">
+                    <form onsubmit="event.preventDefault(); alert('Děkujeme za zprávu. Váš dotaz byl úspěšně odeslán!');" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="name" class="block text-sm font-medium text-gray-700">Jméno a příjmení</label>
+                                <input type="text" id="name" required class="w-full bg-wood-50 border border-gray-200 rounded-lg px-5 py-4 focus:ring-2 focus:ring-wood-500 focus:border-wood-500 outline-none transition-all" placeholder="Jan Novák">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="phone" class="block text-sm font-medium text-gray-700">Telefon</label>
+                                <input type="tel" id="phone" required class="w-full bg-wood-50 border border-gray-200 rounded-lg px-5 py-4 focus:ring-2 focus:ring-wood-500 focus:border-wood-500 outline-none transition-all" placeholder="+420 ...">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="service" class="block text-sm font-medium text-gray-700">O co máte zájem?</label>
+                            <div class="relative">
+                                <select id="service" class="w-full bg-wood-50 border border-gray-200 rounded-lg px-5 py-4 appearance-none focus:ring-2 focus:ring-wood-500 focus:border-wood-500 outline-none transition-all text-gray-900">
+                                    <option value="strecha">Střechy a krovy</option>
+                                    <option value="pergola">Pergoly</option>
+                                    <option value="drevnik">Dřevníky</option>
+                                    <option value="postel">Masivní postele</option>
+                                    <option value="doplnky">Doplňky z masívu</option>
+                                    <option value="jine">Jiné / konzultace</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-gray-500">
+                                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="message" class="block text-sm font-medium text-gray-700">Zpráva / Popis projektu</label>
+                            <textarea id="message" rows="4" required class="w-full bg-wood-50 border border-gray-200 rounded-lg px-5 py-4 focus:ring-2 focus:ring-wood-500 focus:border-wood-500 outline-none transition-all resize-none" placeholder="Napište nám stručně, co potřebujete zrealizovat..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-wood-800 hover:bg-wood-900 text-white font-medium py-4 px-8 rounded-lg transition-colors duration-300 shadow-md mt-4 text-lg">
+                            Odeslat nezávaznou poptávku
+                        </button>
                     </form>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p id="footer-copyright"></p>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal pro Galerii -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-wood-950/95 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-8 cursor-pointer">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/50 hover:text-white transition-colors focus:outline-none z-50">
+            <i data-lucide="x" class="w-10 h-10"></i>
+        </button>
+        <div class="max-w-6xl w-full mx-auto relative flex flex-col items-center cursor-default" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="Zvětšený náhled" class="max-h-[75vh] w-auto object-contain rounded-xl shadow-2xl border border-white/10">
+            <h4 id="lightbox-caption" class="text-white font-heading font-bold text-2xl sm:text-3xl mt-6 text-center"></h4>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-wood-950 pt-20 pb-10 border-t-[6px] border-wood-800 text-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="md:col-span-2 lg:col-span-1">
+                    <a href="#" class="flex items-center gap-2 mb-6 group">
+                        <i data-lucide="hammer" class="w-6 h-6 text-wood-500 transition-transform duration-500 group-hover:rotate-12"></i>
+                        <span class="font-heading font-bold text-2xl text-white">Hervert<span class="text-wood-500">.</span></span>
+                    </a>
+                    <p class="text-white/60 text-sm leading-relaxed mb-6 font-light">
+                        Spolehlivé tesařské práce od drobných pergol až po masivní krovy. Stavíme z kvalitního dřeva s důrazem na tradici a detail.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-heading font-bold text-lg mb-6 text-white">Navigace</h4>
+                    <ul class="space-y-3 text-sm text-white/60">
+                        <li><a href="#domu" class="hover:text-wood-400 transition-colors">Domů</a></li>
+                        <li><a href="#sluzby" class="hover:text-wood-400 transition-colors">Služby</a></li>
+                        <li><a href="#portfolio" class="hover:text-wood-400 transition-colors">Reference</a></li>
+                        <li><a href="#o-nas" class="hover:text-wood-400 transition-colors">O nás</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-heading font-bold text-lg mb-6 text-white">Kontakt</h4>
+                    <ul class="space-y-3 text-sm text-white/60">
+                        <li>Okres Litoměřice</li>
+                        <li><a href="tel:+420123456789" class="hover:text-wood-400 transition-colors">+420 773 602 042</a></li>
+                        <li><a href="mailto:info@tesarstvi-hervert.cz" class="hover:text-wood-400 transition-colors">hery.hervert@seznam.cz</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-heading font-bold text-lg mb-6 text-white">Sítě</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-lg bg-wood-900 flex items-center justify-center text-white hover:bg-wood-800 transition-colors">
+                            <i data-lucide="facebook" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-lg bg-wood-900 flex items-center justify-center text-white hover:bg-wood-800 transition-colors">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-wood-800/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/50">
+<p>&copy; 2026 <a href="https://www.dominikkulich.cz" target="_blank" class="hover:text-wood-400 transition-colors underline decoration-wood-800 underline-offset-4">Dominik Kulich</a>. Všechna práva vyhrazena.</p>                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Ochrana soukromí</a>
+                    <a href="#" class="hover:text-white transition-colors">Cookies</a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <noscript>
-        <div class="content-error">
-            Tento web používá JavaScript pro načtení obsahu. Otevřete ho přes běžný webový server nebo GitHub Pages a ponechte JavaScript zapnutý.
-        </div>
-    </noscript>
+    <!-- JavaScript pro Interaktivitu -->
+    <script>
+        // 1. Inicializace ikon
+        lucide.createIcons();
 
-    <script src="js/main.js"></script>
+        // 2. Mobilní menu logika
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const lines = btn.querySelectorAll('span');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            
+            if (isMenuOpen) {
+                menu.classList.remove('opacity-0', 'pointer-events-none');
+                menu.classList.add('opacity-100', 'pointer-events-auto');
+                document.body.style.overflow = 'hidden';
+                // Animace křížku
+                lines[0].style.transform = 'translateY(8px) rotate(45deg)';
+                lines[1].style.opacity = '0';
+                lines[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+                lines[2].style.width = '1.5rem';
+            } else {
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                menu.classList.remove('opacity-100', 'pointer-events-auto');
+                document.body.style.overflow = 'auto';
+                // Animace hamburgeru
+                lines[0].style.transform = 'none';
+                lines[1].style.opacity = '1';
+                lines[2].style.transform = 'none';
+                lines[2].style.width = '1.5rem';
+            }
+        }
+
+        btn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // 3. Efekt hlavičky při scrollování
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.replace('py-5', 'py-3');
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.replace('py-3', 'py-5');
+                header.classList.remove('shadow-md');
+            }
+        });
+
+        // 4. Scroll Reveal Animace (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => revealOnScroll.observe(el));
+
+        // 5. Filtr Galerie Portfolia
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const noResults = document.getElementById('no-results');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Přepínání aktivních tříd tlačítek
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-wood-600', 'text-white');
+                    b.classList.add('bg-wood-900', 'border-wood-800', 'text-wood-300');
+                });
+                btn.classList.remove('bg-wood-900', 'border-wood-800', 'text-wood-300');
+                btn.classList.add('bg-wood-600', 'text-white');
+
+                const filterValue = btn.getAttribute('data-filter');
+                let hasVisibleItems = false;
+
+                galleryItems.forEach(item => {
+                    const itemCategory = item.getAttribute('data-category');
+                    
+                    // Reset animace pro re-trigger
+                    item.classList.remove('animate-gallery-show');
+                    
+                    if (filterValue === 'all' || filterValue === itemCategory) {
+                        item.style.display = 'block';
+                        hasVisibleItems = true;
+                        // Spustí plynulou CSS animaci
+                        setTimeout(() => item.classList.add('animate-gallery-show'), 10);
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                // Zobrazení prázdného stavu, pokud filtr nenajde obrázky
+                if (!hasVisibleItems) {
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                }
+            });
+        });
+
+        // 6. Lightbox Galerie
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+
+        function openLightbox(imgSrc, caption) {
+            lightboxImg.src = imgSrc;
+            lightboxCaption.textContent = caption;
+            lightbox.classList.remove('hidden');
+            
+            // Drobné zpoždění pro plynulou CSS animaci
+            void lightbox.offsetWidth; // Trigger reflow
+            lightbox.classList.add('opacity-100');
+            document.body.style.overflow = 'hidden'; // Zákaz scrollování stránky
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('opacity-100');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                document.body.style.overflow = 'auto'; // Povolení scrollování stránky
+            }, 300);
+        }
+
+        // Zavření po kliknutí mimo obrázek (na černé pozadí)
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Zavření pomocí klávesy Esc
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+                closeLightbox();
+            }
+        });
+    </script>
 </body>
 </html>
