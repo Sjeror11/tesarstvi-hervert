@@ -22,11 +22,10 @@ Správa fotek je oddělená:
 ## Produkční přístup
 
 - admin URL: `https://tesarstvihervert.cz/admin/`
-- uživatel: `00000`
-- heslo: `000000`
+- přihlašovací údaje: uložené mimo repozitář
 
-Tohle je aktuální provozní heslo nastavené při nasazení.
-Doporučené je změnit ho přímo v administraci přes sekci `Změna hesla`.
+Produkční heslo nepatří do veřejného repozitáře.
+Pokud bylo někdy veřejné, změň ho přímo v administraci přes sekci `Změna hesla`.
 
 ## Důležitá technická poznámka
 
@@ -84,8 +83,7 @@ Pozor:
 
 - veřejný web: `https://tesarstvihervert.cz`
 - admin stránka: `https://tesarstvihervert.cz/admin/`
-- backend API + obrázky: `https://tesarstvi-hervert-cms 0000000000000000000000000
-- `
+- backend API + obrázky: `https://tesarstvi-hervert-cms.sjeror11.workers.dev`
 
 Backend zajišťuje:
 
